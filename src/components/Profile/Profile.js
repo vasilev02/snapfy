@@ -20,6 +20,7 @@ const Profile = () => {
                         
                     </div>
                     <ul class="social-icons">
+                        <li><i class="fas fa-check"></i></li>
                         <li><i class="fas fa-plus"></i></li>
 
                         <form method="post" enctype="multipart/form-data">

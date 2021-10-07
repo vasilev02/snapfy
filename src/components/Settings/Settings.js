@@ -80,6 +80,7 @@ h4 {
 }
 
 .img {
+    margin-right: 20px;
     width: 150px;
     height: 150px;
     border-radius: 6px;
@@ -145,7 +146,7 @@ select:focus {
 }
 
 .btn-primary {
-    background-color: #2c2c2e
+    margin-right: 20px;
 }
 
 .danger {

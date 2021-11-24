@@ -1,11 +1,15 @@
+import { Link } from "react-router-dom";
+
 const People = () => {
   return (
     <>
-      <a href="/profile.html">
+    
+    <Link to="/profile">
         <div className="fab">
           <i className="far fa-user fa-sm"></i>
         </div>
-      </a>
+    </Link>
+      
 
       <header>
         <div className="container h-100">
@@ -47,6 +51,10 @@ const People = () => {
                 data-wow-delay="0.2s"
                 styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
               >
+                
+
+                <Link to="/profile">
+
                 <a className="profile-link" href="/profile.html">
                   <div className="advisor_thumb">
                     <img
@@ -61,6 +69,9 @@ const People = () => {
                     <p className="designation">667 followers</p>
                   </div>
                 </a>
+
+                </Link>
+                
               </div>
             </div>
 

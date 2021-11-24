@@ -24,9 +24,7 @@ const Register = () => {
       return setError("Enter valid email");
     }
 
-    if (
-      passwordRef.current.value.length < 6 ||
-      confirmPasswordRef.current.value.length < 6
+    if (passwordRef.current.value.length < 6 || confirmPasswordRef.current.value.length < 6
     ) {
       return setError("Passwords must be at least 6 characters");
     }
@@ -66,7 +64,7 @@ const Register = () => {
                 <div className="col-md-6 mx-auto text-center"></div>
                 <div className="row">
                   <div className="col-md-4 mx-auto">
-                    {error && <Alert variant="danger">{error}</Alert>}
+                    {error && <Alert variant="info">{error}</Alert>}
                     <div className="myform form ">
                       <form onSubmit={handleSubmit}>
                         <div className="form-group">
@@ -96,7 +94,7 @@ const Register = () => {
                             name="confirmPassword"
                             id="confirmPassword"
                             className="form-control my-input"
-                            placeholder="Password"
+                            placeholder="Confirm password"
                           />
                         </div>
                         <div className="form-group">

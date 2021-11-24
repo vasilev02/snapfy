@@ -1,4 +1,26 @@
+import React, { useState } from "react";
+import { Card, Button, Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { Link, useHistory } from "react-router-dom";
+
 const Profile = () => {
+
+    const [error, setError] = useState("");
+    const { currentUser, logout } = useAuth();
+    const history = useHistory();
+
+    async function handleLogout() {
+        setError("");
+    
+        try {
+          await logout();
+          history.push("/login");
+        } catch {
+          setError("Failed to log out");
+        }
+      }
+
+
     return(
     
         <>
@@ -34,7 +56,8 @@ const Profile = () => {
 
                         <a href="settings.html"><li><i className="fas fa-cog"></i></li></a>
                         
-                        <li><i className="fas fa-sign-out-alt"></i></li>
+                        
+                        <li><i onClick={handleLogout} className="fas fa-sign-out-alt"></i></li>
                     </ul>
                 </div>
             </div>

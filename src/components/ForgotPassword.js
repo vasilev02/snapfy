@@ -2,32 +2,30 @@ import { Link } from "react-router-dom";
 import React, { useRef, useState } from "react"
 import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
 
-const Login = () => {
+const ForgotPassword = () => {
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const { login } = useAuth();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
+    const emailRef = useRef()
+    const { resetPassword } = useAuth()
+    const [error, setError] = useState("")
+    const [message, setMessage] = useState("")
+    const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e) {
-    e.preventDefault()
-
-    try {
-      setError("");
-      setLoading(true);
-      console.log(emailRef.current.value);
-      await login(emailRef.current.value, passwordRef.current.value)
-      history.push("/people");
-    } catch {
-      setError("No such user");
-    }
-
-    setLoading(false)
-  }
+    async function handleSubmit(e) {
+        e.preventDefault()
+    
+        try {
+          setMessage("")
+          setError("")
+          setLoading(true)
+          await resetPassword(emailRef.current.value)
+          setMessage("Check your inbox for further instructions")
+        } catch {
+          setError("Failed to reset password")
+        }
+    
+        setLoading(false)
+      }
 
 return(
 
@@ -46,6 +44,7 @@ return(
             </div>
             <div className="row">
                <div className="col-md-4 mx-auto">
+               {message && <Alert variant="info">{message}</Alert>}
                {error && <Alert variant="info">{error}</Alert>}
                   <div className="myform form ">
                      <form onSubmit={handleSubmit}>
@@ -53,15 +52,15 @@ return(
                            <input type="email" ref={emailRef} name="email"  className="form-control my-input" id="email" placeholder="Email" />
                         </div>
                         <div className="form-group">
-                           <input type="password" ref={passwordRef}  className="form-control my-input" placeholder="Password" />
-                        </div>
-                        <div className="form-group">
-                          <button disabled={loading} className="btn btn-block g-button" type="submit">Sign in</button>
+                          <button disabled={loading} className="btn btn-block g-button" type="submit">Reset password</button>
                         </div>
                      </form>
-                     <p className="small mt-3">Don't have an account? <span><Link to="/register">Sign up</Link></span> or <span><Link to="/forgot-password">Forgot password</Link></span>
-                     </p>
-                     
+                     <p className="small mt-3">
+                     Do you rememberd it?{" "}
+                        <span>
+                          <Link to="/login">Sign in</Link>
+                        </span>
+                      </p>
                   </div>
                </div>
             </div>
@@ -184,4 +183,4 @@ h2 {
 );
 };
 
-export default Login;
+export default ForgotPassword;

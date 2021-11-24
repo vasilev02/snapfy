@@ -2,23 +2,23 @@ const People = () => {
   return (
     <>
       <a href="/profile.html">
-        <div class="fab">
-          <i class="far fa-user fa-sm"></i>
+        <div className="fab">
+          <i className="far fa-user fa-sm"></i>
         </div>
       </a>
 
       <header>
-        <div class="container h-100">
-          <div class="d-flex justify-content-center h-100">
-            <div class="searchbar">
+        <div className="container h-100">
+          <div className="d-flex justify-content-center h-100">
+            <div className="searchbar">
               <input
-                class="search_input"
+                className="search_input"
                 type="text"
                 name=""
                 placeholder="Search... @"
               />
-              <a href="#" class="search_icon">
-                <i class="fas fa-search"></i>
+              <a href="#" className="search_icon">
+                <i className="fas fa-search"></i>
               </a>
             </div>
           </div>
@@ -26,42 +26,45 @@ const People = () => {
       </header>
 
       <main>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-12 col-sm-8 col-lg-6">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-12 col-sm-8 col-lg-6">
               <div
-                class="section_heading text-center wow fadeInUp"
+                className="section_heading text-center wow fadeInUp"
                 data-wow-delay="0.2s"
                 styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
               >
                 <h3>Find your friends</h3>
-                <div class="line"></div>
+                <div className="line"></div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12 col-sm-6 col-lg-3">
+          <div className="row">
+
+            <div className="col-12 col-sm-6 col-lg-3">
               <div
-                class="single_advisor_profile wow fadeInUp"
+                className="single_advisor_profile wow fadeInUp"
                 data-wow-delay="0.2s"
                 styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
               >
                 <a className="profile-link" href="/profile.html">
-                  <div class="advisor_thumb">
+                  <div className="advisor_thumb">
                     <img
                       src="https://girlsleadership.org/wp-content/uploads/2020/07/girl-glasses-7-965x1024-1.jpg"
                       alt="User picture"
                     />
                   </div>
 
-                  <div class="single_advisor_details_info">
+                  <div className="single_advisor_details_info">
                     <h6>Samantha Sarah</h6>
-                    <p class="designation">Founder &amp; CEO</p>
-                    <p class="designation">667 followers</p>
+                    <p className="designation">Founder &amp; CEO</p>
+                    <p className="designation">667 followers</p>
                   </div>
                 </a>
               </div>
             </div>
+
+  
           </div>
         </div>
       </main>
@@ -119,6 +122,10 @@ const People = () => {
         body {
           margin-top: 20px;
           background: #eee;
+        }
+
+        .row{
+          justify-content:center;
         }
 
         .single_advisor_profile {

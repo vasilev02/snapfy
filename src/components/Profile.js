@@ -5,66 +5,66 @@ const Profile = () => {
 
 <main>
         <a href="/home.html">
-            <div class="fab-users"><i class="fas fa-users"></i></div>
+            <div className="fab-users"><i className="fas fa-users"></i></div>
         </a>
 
-        <div class="wrapper">
-            <img class="background-image" src="https://www.enjpg.com/img/2020/outer-space-background-8.jpg" alt="Background image" />
+        <div className="wrapper">
+            <img className="background-image" src="https://www.enjpg.com/img/2020/outer-space-background-8.jpg" alt="Background image" />
 
-            <div class="profile">
+            <div className="profile">
                 <img src="https://media.glamour.com/photos/60ec8c044b69168174d4d344/master/pass/118199090_660701904827587_4866693903082711670_n.jpg" alt="Profile image" />
-                <div class="overlay">
-                    <div class="about d-flex flex-column">
+                <div className="overlay">
+                    <div className="about d-flex flex-column">
                         <h4>Kim Sarah</h4>
                         <span>@sarah34</span>
                         
                     </div>
-                    <ul class="social-icons">
-                        <li><i class="fas fa-check"></i></li>
-                        <li><i class="fas fa-plus"></i></li>
+                    <ul className="social-icons">
+                        <li><i className="fas fa-check"></i></li>
+                        <li><i className="fas fa-plus"></i></li>
 
                         <form method="post" enctype="multipart/form-data">
 
                             <label for="apply">
                                 <input type="file" name="" id="apply" accept="image/*,.pdf" />
-                                <li><i class="far fa-images"></i></li>
+                                <li><i className="far fa-images"></i></li>
                             </label>
                                 
                             </form> 
 
-                        <a href="settings.html"><li><i class="fas fa-cog"></i></li></a>
+                        <a href="settings.html"><li><i className="fas fa-cog"></i></li></a>
                         
-                        <li><i class="fas fa-sign-out-alt"></i></li>
+                        <li><i className="fas fa-sign-out-alt"></i></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="card p-0">
-                        <div class="card-image"> <img src="https://images.pexels.com/photos/2746187/pexels-photo-2746187.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" /> </div>
+        <div className="container">
+            <div className="row">
+                <div className="col-lg-4">
+                    <div className="card p-0">
+                        <div className="card-image"> <img src="https://images.pexels.com/photos/2746187/pexels-photo-2746187.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" /> </div>
                         
                         
-                        <div class="card-content d-flex flex-column align-items-center">
-                            <ul class="social-icons">
-                                <li><i class="far fa-heart"></i></li>
-                                <li><i class="far fa-trash-alt"></i></li>
+                        <div className="card-content d-flex flex-column align-items-center">
+                            <ul className="social-icons">
+                                <li><i className="far fa-heart"></i></li>
+                                <li><i className="far fa-trash-alt"></i></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-4">
-                    <div class="card p-0">
-                        <div class="card-image"> <img src="https://images.pexels.com/photos/2746187/pexels-photo-2746187.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" /> </div>
+                <div className="col-lg-4">
+                    <div className="card p-0">
+                        <div className="card-image"> <img src="https://images.pexels.com/photos/2746187/pexels-photo-2746187.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="" /> </div>
                         
                         
-                        <div class="card-content d-flex flex-column align-items-center">
-                            <ul class="social-icons">
-                                <li><i class="far fa-heart"></i></li>
-                                <li><i class="far fa-trash-alt"></i></li>
+                        <div className="card-content d-flex flex-column align-items-center">
+                            <ul className="social-icons">
+                                <li><i className="far fa-heart"></i></li>
+                                <li><i className="far fa-trash-alt"></i></li>
                             </ul>
                         </div>
                     </div>

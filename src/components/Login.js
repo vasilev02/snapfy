@@ -4,33 +4,33 @@ const Login = () => {
 return(
 
     <>
-    <main class="masthead">
+    <main className="masthead">
 
-    <div class="container h-100">
-      <div class="row h-100 align-items-center">
-        <div class="col-12 text-center">
-          <div class="image-logo">
+    <div className="container h-100">
+      <div className="row h-100 align-items-center">
+        <div className="col-12 text-center">
+          <div className="image-logo">
             <img src="https://res.cloudinary.com/defiefioi/image/upload/v1633607254/snapfy/logo_s48iol.png" alt="Logo" />
           </div>
 
-          <div class="container">
-            <div class="col-md-6 mx-auto text-center">
+          <div className="container">
+            <div className="col-md-6 mx-auto text-center">
             </div>
-            <div class="row">
-               <div class="col-md-4 mx-auto">
-                  <div class="myform form ">
+            <div className="row">
+               <div className="col-md-4 mx-auto">
+                  <div className="myform form ">
                      <form action="" method="post">
-                        <div class="form-group">
-                           <input type="email" name="email"  class="form-control my-input" id="email" placeholder="Username or email" />
+                        <div className="form-group">
+                           <input type="email" name="email"  className="form-control my-input" id="email" placeholder="Username or email" />
                         </div>
-                        <div class="form-group">
-                           <input type="password"  class="form-control my-input" placeholder="Password" />
+                        <div className="form-group">
+                           <input type="password"  className="form-control my-input" placeholder="Password" />
                         </div>
-                        <div class="form-group">
-                          <button class="btn btn-block g-button" type="submit">Sign in</button>
+                        <div className="form-group">
+                          <button className="btn btn-block g-button" type="submit">Sign in</button>
                         </div>
                      </form>
-                     <p class="small mt-3">Don't have an account? <span><Link to="/register">Sign up</Link></span>
+                     <p className="small mt-3">Don't have an account? <span><Link to="/register">Sign up</Link></span>
                      </p>
                   </div>
                </div>

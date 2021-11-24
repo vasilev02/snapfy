@@ -6,50 +6,50 @@ const Settings = () => {
 <main>
 
 <a href="/profile.html">
-  <div class="fab"><i class="far fa-user fa-sm"></i></div>
+  <div className="fab"><i className="far fa-user fa-sm"></i></div>
 </a>
 
-<div class="wrapper bg-white mt-sm-5">
-<h4 class="pb-4 border-bottom">Account settings</h4>
+<div className="wrapper bg-white mt-sm-5">
+<h4 className="pb-4 border-bottom">Account settings</h4>
 
-<div class="py-2">
+<div className="py-2">
 
   <form action="" method="" enctype="multipart/form-data">
 
-    <div class="d-flex align-items-start py-3 border-bottom"> <img src="https://i2-prod.mirror.co.uk/incoming/article23362081.ece/ALTERNATES/s1200c/0_DSOL_Yael_Shelbia_7.jpg" class="img" alt="Profile picture" />
-      <div class="pl-sm-4 pl-2" id="img-section"> <b>Profile photo</b>
-          <p>Accepted file type .png. Less than 5MB</p> <button class="btn button border"><b>Upload</b></button>
+    <div className="d-flex align-items-start py-3 border-bottom"> <img src="https://i2-prod.mirror.co.uk/incoming/article23362081.ece/ALTERNATES/s1200c/0_DSOL_Yael_Shelbia_7.jpg" className="img" alt="Profile picture" />
+      <div className="pl-sm-4 pl-2" id="img-section"> <b>Profile photo</b>
+          <p>Accepted file type .png. Less than 5MB</p> <button className="btn button border"><b>Upload</b></button>
       </div>
   </div>
 
-  <div class="d-flex align-items-start py-3 border-bottom"> <img src="https://images.unsplash.com/photo-1520758594221-872948699332?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YnJpY2slMjB3YWxsfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" class="img" alt="Background picture" />
-    <div class="pl-sm-4 pl-2" id="img-section"> <b>Background photo</b>
-        <p>Accepted file type .png. Less than 5MB</p> <button class="btn button border"><b>Upload</b></button>
+  <div className="d-flex align-items-start py-3 border-bottom"> <img src="https://images.unsplash.com/photo-1520758594221-872948699332?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YnJpY2slMjB3YWxsfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" className="img" alt="Background picture" />
+    <div className="pl-sm-4 pl-2" id="img-section"> <b>Background photo</b>
+        <p>Accepted file type .png. Less than 5MB</p> <button className="btn button border"><b>Upload</b></button>
     </div>
 </div>
 
   
 
-    <div class="row py-2">
-      <div class="col-md-6"> <label for="firstname">Full name</label> <input type="text" class="bg-light form-control" /> </div>
-      <div class="col-md-6"> <label for="firstname">Username</label> <input type="text" class="bg-light form-control" /> </div>
+    <div className="row py-2">
+      <div className="col-md-6"> <label for="firstname">Full name</label> <input type="text" className="bg-light form-control" /> </div>
+      <div className="col-md-6"> <label for="firstname">Username</label> <input type="text" className="bg-light form-control" /> </div>
     </div>
 
-  <div class="row py-2">
-      <div class="col-md-6"> <label for="email">Email address</label> <input type="email" class="bg-light form-control" /> </div>
+  <div className="row py-2">
+      <div className="col-md-6"> <label for="email">Email address</label> <input type="email" className="bg-light form-control" /> </div>
   </div>
 
-    <div class="py-3 pb-4 border-bottom"> 
-      <button type="submit" class="btn btn-primary mr-3">Save</button> 
-      <a href="/profile.html" class="btn border button">Cancel</a> </div>
+    <div className="py-3 pb-4 border-bottom"> 
+      <button type="submit" className="btn btn-primary mr-3">Save</button> 
+      <a href="/profile.html" className="btn border button">Cancel</a> </div>
   </form>
 
-    <div class="d-sm-flex align-items-center pt-3" id="deactivate">
+    <div className="d-sm-flex align-items-center pt-3" id="deactivate">
         <div> <b>Deactivate your account</b>
             <p>Details about your account and password</p>
         </div>
     </div>
-    <div class="ml-auto"> <button class="btn danger">Deactivate</button> </div>
+    <div className="ml-auto"> <button className="btn danger">Deactivate</button> </div>
 </div>
 </div>
 

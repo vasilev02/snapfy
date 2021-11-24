@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
-import React, { useRef, useState } from "react"
-import { Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
+import React, { useRef, useState } from "react";
+import { Alert } from "react-bootstrap";
+import { useAuth } from "../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
 
@@ -14,24 +17,25 @@ const Login = () => {
   const history = useHistory();
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       setError("");
       setLoading(true);
       console.log(emailRef.current.value);
-      await login(emailRef.current.value, passwordRef.current.value)
+      await login(emailRef.current.value, passwordRef.current.value);
+      toast.error("Hello, " + emailRef.current.value,{position: toast.POSITION.TOP_CENTER})
       history.push("/people");
     } catch {
-      setError("No such user");
+      toast.error("No such user",{position: toast.POSITION.TOP_CENTER,draggable: true,});
     }
-
-    setLoading(false)
+    setLoading(false);
   }
 
 return(
 
     <>
+    <ToastContainer/>
     <main className="masthead">
 
     <div className="container h-100">

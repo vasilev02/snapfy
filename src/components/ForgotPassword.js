@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import React, { useRef, useState } from "react"
 import { Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ForgotPassword = () => {
 
@@ -19,9 +21,9 @@ const ForgotPassword = () => {
           setError("")
           setLoading(true)
           await resetPassword(emailRef.current.value)
-          setMessage("Check your inbox for further instructions")
+          toast.info("Check your inbox",{position: toast.POSITION.TOP_CENTER});
         } catch {
-          setError("Failed to reset password")
+          toast.error("Failed to reset password",{position: toast.POSITION.TOP_CENTER});
         }
     
         setLoading(false)
@@ -30,6 +32,7 @@ const ForgotPassword = () => {
 return(
 
     <>
+    <ToastContainer/>
     <main className="masthead">
 
     <div className="container h-100">

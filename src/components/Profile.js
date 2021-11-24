@@ -57,7 +57,7 @@ const Profile = () => {
                         <a href="settings.html"><li><i className="fas fa-cog"></i></li></a>
                         
                         
-                        <li><i onClick={handleLogout} className="fas fa-sign-out-alt"></i></li>
+                        <li onClick={handleLogout}><i className="fas fa-sign-out-alt"></i></li>
                     </ul>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import React, { useRef, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const emailRef = useRef();
@@ -21,16 +23,18 @@ const Register = () => {
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if (!emailRef.current.value.match(regexEmail)) {
-      return setError("Enter valid email");
+      toast.error("Enter valid email",{position: toast.POSITION.TOP_CENTER,draggable: true,});
+      return;
     }
 
-    if (passwordRef.current.value.length < 6 || confirmPasswordRef.current.value.length < 6
-    ) {
-      return setError("Passwords must be at least 6 characters");
+    if (passwordRef.current.value.length < 6 || confirmPasswordRef.current.value.length < 6) {
+      toast.error("Passwords must be at least 6 characters",{position: toast.POSITION.TOP_CENTER,draggable: true,});
+      return;
     }
 
     if (passwordRef.current.value !== confirmPasswordRef.current.value) {
-      return setError("Passwords do not match");
+      toast.error("Passwords do not match",{position: toast.POSITION.TOP_CENTER,draggable: true,});
+      return;
     }
 
     try {
@@ -41,7 +45,7 @@ const Register = () => {
       await signup(emailRef.current.value, passwordRef.current.value);
       history.push("/profile");
     } catch {
-      setError("Failed to create an account");
+      toast.error("Failed to create an account",{position: toast.POSITION.TOP_CENTER,draggable: true,});
     }
 
     setLoading(false);
@@ -49,6 +53,7 @@ const Register = () => {
 
   return (
     <>
+    <ToastContainer/>
       <main className="masthead">
         <div className="container h-100">
           <div className="row h-100 align-items-center">

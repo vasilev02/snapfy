@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const People = () => {
   return (
     <>
-    
+    <ToastContainer/>
     <Link to="/profile">
         <div className="fab">
           <i className="far fa-user fa-sm"></i>

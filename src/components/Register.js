@@ -18,8 +18,6 @@ const Register = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log("isnide");
-
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
     if (!emailRef.current.value.match(regexEmail)) {
@@ -40,8 +38,6 @@ const Register = () => {
     try {
       setError("");
       setLoading(true);
-      console.log(emailRef.current.value);
-      console.log(passwordRef.current.value);
       await signup(emailRef.current.value, passwordRef.current.value);
       history.push("/profile");
     } catch {

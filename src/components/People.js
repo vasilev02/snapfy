@@ -60,15 +60,15 @@ const People = () => {
                 <a className="profile-link" href="/profile.html">
                   <div className="advisor_thumb">
                     <img
-                      src="https://girlsleadership.org/wp-content/uploads/2020/07/girl-glasses-7-965x1024-1.jpg"
+                      src="https://scontent.fsof11-1.fna.fbcdn.net/v/t39.30808-6/250403194_393277259143809_5424763556326976011_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=CAtFYFEdlMAAX_HCZvN&_nc_ht=scontent.fsof11-1.fna&oh=7ab05e46c4844bea7881ba86376961f8&oe=61A58289"
                       alt="User picture"
                     />
                   </div>
 
                   <div className="single_advisor_details_info">
-                    <h6>Samantha Sarah</h6>
-                    <p className="designation">Founder &amp; CEO</p>
-                    <p className="designation">667 followers</p>
+                    <h6>Valentin Vasilev</h6>
+                    <p className="designation">val3ntin</p>
+                    <p className="designation">699 followers</p>
                   </div>
                 </a>
 

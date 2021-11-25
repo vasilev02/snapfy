@@ -22,7 +22,6 @@ const Login = () => {
     try {
       setError("");
       setLoading(true);
-      console.log(emailRef.current.value);
       await login(emailRef.current.value, passwordRef.current.value);
       toast.error("Hello, " + emailRef.current.value,{position: toast.POSITION.TOP_CENTER})
       history.push("/people");

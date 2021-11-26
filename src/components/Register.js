@@ -3,10 +3,12 @@ import React, { useRef, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
+import firebase from "../firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const usernameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -18,7 +20,17 @@ const Register = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    const username = usernameRef.current.value;
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
     let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    let regexUsername = /^[a-z0-9_-]{3,16}$/;
+
+    if (!usernameRef.current.value.match(regexUsername)) {
+      toast.error("Enter valid username",{position: toast.POSITION.TOP_CENTER,draggable: true,});
+      return;
+    }
 
     if (!emailRef.current.value.match(regexEmail)) {
       toast.error("Enter valid email",{position: toast.POSITION.TOP_CENTER,draggable: true,});
@@ -39,7 +51,18 @@ const Register = () => {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
+      firebase.firestore().collection("users").add({
+        username: username,
+        email: email,
+        profilePicture: "",
+        backgroundPicture: "",
+        photos: [],
+        followersCount: 0,
+        folowers: []
+      });
+      
       history.push("/profile");
+      toast.success("Successfully registered to snapfy",{position: toast.POSITION.TOP_CENTER});
     } catch {
       toast.error("Failed to create an account",{position: toast.POSITION.TOP_CENTER,draggable: true,});
     }
@@ -49,7 +72,6 @@ const Register = () => {
 
   return (
     <>
-    <ToastContainer/>
       <main className="masthead">
         <div className="container h-100">
           <div className="row h-100 align-items-center">
@@ -68,6 +90,17 @@ const Register = () => {
                     {error && <Alert variant="info">{error}</Alert>}
                     <div className="myform form ">
                       <form onSubmit={handleSubmit}>
+
+                      <div className="form-group">
+                          <input
+                            type="username"
+                            ref={usernameRef}
+                            name="username"
+                            className="form-control my-input"
+                            id="username"
+                            placeholder="Username"
+                          />
+                        </div>
                         <div className="form-group">
                           <input
                             type="email"
@@ -78,6 +111,7 @@ const Register = () => {
                             placeholder="Email"
                           />
                         </div>
+                      
                         <div className="form-group">
                           <input
                             type="password"

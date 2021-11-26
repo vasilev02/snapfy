@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Settings = () => {
     return(
     
@@ -5,9 +7,11 @@ const Settings = () => {
 
 <main>
 
-<a href="/profile.html">
-  <div className="fab"><i className="far fa-user fa-sm"></i></div>
-</a>
+
+<Link to="/login">
+    <div className="fab"><i className="far fa-user fa-sm"></i></div>
+</Link>
+
 
 <div className="wrapper bg-white mt-sm-5">
 <h4 className="pb-4 border-bottom">Account settings</h4>

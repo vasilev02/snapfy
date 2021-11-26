@@ -1,11 +1,30 @@
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, {useState,  useEffect} from "react";
+import firebase from "../firebase";
 
 const People = () => {
+
+  const [users, setUsers] = useState([]);
+  const ref = firebase.firestore().collection("users");
+
+    function getUsers() {
+      ref.onSnapshot((querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data());
+        });
+        setUsers(items);
+      });
+    }
+  
+    useEffect(() => {
+      getUsers();
+    }, []);
+
+    console.log(users)
+
   return (
     <>
-    <ToastContainer/>
     <Link to="/profile">
         <div className="fab">
           <i className="far fa-user fa-sm"></i>

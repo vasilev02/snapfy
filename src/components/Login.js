@@ -23,8 +23,8 @@ const Login = () => {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/people");
-      toast.error("Hello, " + emailRef.current.value,{position: toast.POSITION.TOP_CENTER});
+      toast.success("Welcome to snapfy",{position: toast.POSITION.TOP_CENTER});
+      history.push("/profile");
     } catch {
       toast.error("No such user",{position: toast.POSITION.TOP_CENTER,draggable: true,});
     }
@@ -34,7 +34,6 @@ const Login = () => {
 return(
 
     <>
-    <ToastContainer/>
     <main className="masthead">
 
     <div className="container h-100">

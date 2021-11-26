@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -17,7 +16,7 @@ const Profile = () => {
         try {
           await logout();
           history.push("/");
-          toast.error("Successfully logged out",{position: toast.POSITION.TOP_CENTER});
+          toast.success("Successfully logged out",{position: toast.POSITION.TOP_CENTER});
         } catch {
           setError("Failed to log out");
         }
@@ -29,19 +28,20 @@ const Profile = () => {
         <>
 
 <main>
-        <a href="/home.html">
-            <div className="fab-users"><i className="fas fa-users"></i></div>
-        </a>
+<Link to="/people">
+<div className="fab-users"><i className="fas fa-users"></i></div>
+</Link>
+        
 
         <div className="wrapper">
-            <img className="background-image" src="https://www.enjpg.com/img/2020/outer-space-background-8.jpg" alt="Background image" />
+            <img className="background-image" src="https://www.teahub.io/photos/full/26-266158_nature-hd-wallpaper-landscape-wallpapers-nature-landscape-best.jpg" alt="Background image" />
 
             <div className="profile">
                 <img src="https://media.glamour.com/photos/60ec8c044b69168174d4d344/master/pass/118199090_660701904827587_4866693903082711670_n.jpg" alt="Profile image" />
                 <div className="overlay">
                     <div className="about d-flex flex-column">
-                        <h4>Kim Sarah</h4>
-                        <span>@sarah34</span>
+                        <h4 className="fullName">Valentin Vasilev</h4>
+                        <span className="username">@sarah34</span>
                         
                     </div>
                     <ul className="social-icons">
@@ -57,7 +57,8 @@ const Profile = () => {
                                 
                             </form> 
 
-                        <a href="settings.html"><li><i className="fas fa-cog"></i></li></a>
+                            <Link to="/settings"><li><i className="fas fa-cog"></i></li></Link>
+                       
                         
                         
                         <li onClick={handleLogout}><i className="fas fa-sign-out-alt"></i></li>
@@ -106,6 +107,7 @@ const Profile = () => {
     
     @import url('https://use.fontawesome.com/releases/v5.15.4/css/all.css');
 
+
     .wrapper {
         display: flex;
         justify-content: center;
@@ -115,6 +117,14 @@ const Profile = () => {
     }
     .profile{
         position: relative;
+    }
+
+    .fullName, .username{
+        color: black;
+        background-color: white;
+        padding: 5px;
+        margin: 5px;
+        border-radius: 10px;
     }
     
     .background-image{

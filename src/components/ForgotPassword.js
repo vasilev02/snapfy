@@ -32,7 +32,6 @@ const ForgotPassword = () => {
 return(
 
     <>
-    <ToastContainer/>
     <main className="masthead">
 
     <div className="container h-100">

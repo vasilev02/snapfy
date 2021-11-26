@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
 
@@ -15,6 +17,7 @@ const Profile = () => {
         try {
           await logout();
           history.push("/");
+          toast.error("Successfully logged out",{position: toast.POSITION.TOP_CENTER});
         } catch {
           setError("Failed to log out");
         }

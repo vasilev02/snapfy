@@ -5,18 +5,23 @@ import Profile from './components/Profile';
 import Settings from './components/Settings';
 import People from './components/People';
 import ForgotPassword from './components/ForgotPassword';
+import PageNotFound from './components/PageNotFound';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from "./contexts/AuthContext"
 import PrivateRoute from "./components/PrivateRoute"
 import PublicRoute from './components/PublicRoute';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
   return (
     
+    
     <AuthProvider>
+      <ToastContainer/>
       <Switch>
         <PublicRoute exact path="/" component={Home} />
         <PublicRoute path="/login" component={Login} />
@@ -25,6 +30,7 @@ function App() {
         <PrivateRoute path="/profile" component={Profile} />
         <PrivateRoute path="/settings" component={Settings} />
         <PrivateRoute path="/people" component={People} />
+        <Route path='*' exact={true} component={PageNotFound} />
       </Switch>
     </AuthProvider>
       

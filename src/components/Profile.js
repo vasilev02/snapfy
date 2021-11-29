@@ -34,10 +34,10 @@ const Profile = () => {
         
 
         <div className="wrapper">
-            <img className="background-image" src="https://www.teahub.io/photos/full/26-266158_nature-hd-wallpaper-landscape-wallpapers-nature-landscape-best.jpg" alt="Background image" />
+            <img className="background-image" src="https://res.cloudinary.com/defiefioi/image/upload/v1638190146/snapfy/materialstyle-1638190120334-3015_cvndhi.jpg" alt="Background image" />
 
             <div className="profile">
-                <img src="https://media.glamour.com/photos/60ec8c044b69168174d4d344/master/pass/118199090_660701904827587_4866693903082711670_n.jpg" alt="Profile image" />
+                <img src="https://sothis.es/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png" alt="Profile image" />
                 <div className="overlay">
                     <div className="about d-flex flex-column">
                         <h4 className="fullName">Valentin Vasilev</h4>

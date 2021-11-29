@@ -54,11 +54,12 @@ const Register = () => {
       firebase.firestore().collection("users").add({
         username: username,
         email: email,
-        profilePicture: "",
-        backgroundPicture: "",
+        profilePicture: "https://res.cloudinary.com/defiefioi/image/upload/v1638190690/snapfy/default-user-image_f73kml.png",
+        backgroundPicture: "https://res.cloudinary.com/defiefioi/image/upload/v1638190146/snapfy/materialstyle-1638190120334-3015_cvndhi.jpg",
         photos: [],
         followersCount: 0,
-        folowers: []
+        peopleWhoFollow: [],
+        peopleWhoFollowedMe: [],
       });
       
       history.push("/profile");

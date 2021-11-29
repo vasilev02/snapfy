@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React, {useState,  useEffect} from "react";
 import firebase from "../firebase";
+import UserCard from "./UserCard"
 
 const People = () => {
 
@@ -21,7 +22,7 @@ const People = () => {
       getUsers();
     }, []);
 
-    console.log(users)
+    
 
   return (
     <>
@@ -66,35 +67,10 @@ const People = () => {
           </div>
           <div className="row">
 
-            <div className="col-12 col-sm-6 col-lg-3">
-              <div
-                className="single_advisor_profile wow fadeInUp"
-                data-wow-delay="0.2s"
-                styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
-              >
-                
+            
 
-                <Link to="/profile">
+            {users.map(x => <UserCard user={x}/>)}
 
-                <a className="profile-link" href="/profile.html">
-                  <div className="advisor_thumb">
-                    <img
-                      src="https://scontent.fsof11-1.fna.fbcdn.net/v/t39.30808-6/250403194_393277259143809_5424763556326976011_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=CAtFYFEdlMAAX_HCZvN&_nc_ht=scontent.fsof11-1.fna&oh=7ab05e46c4844bea7881ba86376961f8&oe=61A58289"
-                      alt="User picture"
-                    />
-                  </div>
-
-                  <div className="single_advisor_details_info">
-                    <h6>Valentin Vasilev</h6>
-                    <p className="designation">val3ntin</p>
-                    <p className="designation">699 followers</p>
-                  </div>
-                </a>
-
-                </Link>
-                
-              </div>
-            </div>
 
   
           </div>

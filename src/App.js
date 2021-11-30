@@ -28,7 +28,7 @@ function App() {
         <PublicRoute path="/register" component={Register} />
         <PublicRoute path="/forgot-password" component={ForgotPassword} />
         <PrivateRoute path="/profile" component={Profile} />
-        <PrivateRoute path="/settings" component={Settings} />
+        <PrivateRoute path="/settings/:userId" component={Settings} />
         <PrivateRoute path="/people" exact component={People} />
         <PrivateRoute path="/people/:userId" component={Profile} />
         <Route path='*' exact={true} component={PageNotFound} />

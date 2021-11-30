@@ -5,9 +5,11 @@ import { toast } from "react-toastify";
 import firebase from "../firebase";
 import "react-toastify/dist/ReactToastify.css";
 import Axios from "axios";
+import ImageCard from "./ImageCard";
 
 const Profile = ({ match }) => {
   const [user, setUser] = useState({});
+  const [photos, setPhotos] = useState([]);
   const [error, setError] = useState("");
 
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
@@ -18,7 +20,6 @@ const Profile = ({ match }) => {
   const history = useHistory();
 
   const uploadImage = (files) => {
-    console.log(files[0]);
     const formData = new FormData();
     formData.append("file", files[0]);
     formData.append("upload_preset", "eww0g74o");
@@ -34,13 +35,15 @@ const Profile = ({ match }) => {
         .doc(userId)
         .get()
         .then(function (doc) {
-          let photos = doc.data().photos;
-          photos.push(response.data.public_id);
-          
-          firebase.firestore().collection("users").doc(userId).update({
-            photos: photos
-        });
 
+          let userPhotos = doc.data().photos;
+          //url or public_id
+          userPhotos.push(response.data.url);
+          setPhotos(userPhotos);
+
+          firebase.firestore().collection("users").doc(userId).update({
+            photos: userPhotos
+        });
 
         })
         .catch(function (error) {
@@ -61,6 +64,8 @@ const Profile = ({ match }) => {
         .get()
         .then(function (doc) {
           setUser(doc.data());
+          setPhotos(doc.data().photos);
+          console.log(photos);
         })
         .catch(function (error) {
           console.log("Error getting document:", error);
@@ -116,7 +121,7 @@ const Profile = ({ match }) => {
                             type="file"
                             id="avatar"
                             name="avatar"
-                            accept="image/png, image/jpeg"
+                            accept="image/png, image/jpeg, image/jpg"
                             onChange={(event) => {
                               uploadImage(event.target.files);
                             }}
@@ -125,7 +130,7 @@ const Profile = ({ match }) => {
                       </li>
                     </label>
 
-                    <Link to="/settings">
+                    <Link to={"/settings/" + userId}>
                       <li>
                         <i className="fas fa-cog"></i>
                       </li>
@@ -152,51 +157,15 @@ const Profile = ({ match }) => {
 
         <div className="container">
           <div className="row">
-            <div className="col-lg-4">
-              <div className="card p-0">
-                <div className="card-image">
-                  {" "}
-                  <img
-                    src="https://images.pexels.com/photos/2746187/pexels-photo-2746187.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                    alt=""
-                  />{" "}
-                </div>
 
-                <div className="card-content d-flex flex-column align-items-center">
-                  <ul className="social-icons">
-                    <li>
-                      <i className="far fa-heart"></i>
-                    </li>
-                    <li>
-                      <i className="far fa-trash-alt"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+          {photos.map(x => {
+            console.log(x);
+           <ImageCard key={x} url={x} />
 
-            <div className="col-lg-4">
-              <div className="card p-0">
-                <div className="card-image">
-                  {" "}
-                  <img
-                    src="https://images.pexels.com/photos/2746187/pexels-photo-2746187.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                    alt=""
-                  />{" "}
-                </div>
+          })}
 
-                <div className="card-content d-flex flex-column align-items-center">
-                  <ul className="social-icons">
-                    <li>
-                      <i className="far fa-heart"></i>
-                    </li>
-                    <li>
-                      <i className="far fa-trash-alt"></i>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+
+            
           </div>
         </div>
       </main>
@@ -236,8 +205,9 @@ const Profile = ({ match }) => {
         }
 
         .profile img {
+          object-fit: cover;
           position: relative;
-          width: 400px;
+          width: 450px;
           height: 450px;
           border-radius: 6px;
         }

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "bootstrap": "^5.1.2",
+    "cloudinary-react": "^1.7.0",
     "firebase": "^7.24.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.4",

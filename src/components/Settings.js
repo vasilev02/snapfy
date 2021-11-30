@@ -1,6 +1,86 @@
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import firebase from "../firebase";
+import Axios from "axios";
+import  { Redirect } from 'react-router-dom'
 
-const Settings = () => {
+const Settings = ({ match }) => {
+
+    const history = useHistory();
+    const [userId, setUserId] = useState(localStorage.getItem("userId"));
+
+    if(userId !== match.params.userId){
+        history.push("/people/"+ match.params.userId);
+    }
+
+    const [user, setUser] = useState({});
+    const [profilePicture, setProfilePicture] = useState("");
+    
+    
+
+    const uploadProfileImage = (files) => {
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        formData.append("upload_preset", "eww0g74o");
+        Axios.post(
+          "https://api.cloudinary.com/v1_1/defiefioi/image/upload",
+          formData
+        ).then((response) => {
+    
+    
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(userId)
+            .get()
+            .then(function (doc) {
+              firebase.firestore().collection("users").doc(userId).update({
+                profilePicture: response.data.url
+            });
+            history.push("/people/"+ userId);
+            })
+        });
+      };
+
+      const uploadBackgroundImage = (files) => {
+        const formData = new FormData();
+        formData.append("file", files[0]);
+        formData.append("upload_preset", "eww0g74o");
+        Axios.post(
+          "https://api.cloudinary.com/v1_1/defiefioi/image/upload",
+          formData
+        ).then((response) => {
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(userId)
+            .get()
+            .then(function (doc) {
+              firebase.firestore().collection("users").doc(userId).update({
+                backgroundPicture: response.data.url
+            });
+            history.push("/people/"+ userId);
+            })
+        });
+      };
+
+    useEffect(() => {
+          firebase
+            .firestore()
+            .collection("users")
+            .doc(match.params.userId)
+            .get()
+            .then(function (doc) {
+              setUser(doc.data());
+              console.log(user);
+            })
+            .catch(function (error) {
+              console.log("Error getting document:", error);
+            });
+        
+      }, []);
+
+
     return(
     
         <>
@@ -8,7 +88,7 @@ const Settings = () => {
 <main>
 
 
-<Link to="/login">
+<Link to={"/people/"+userId}>
     <div className="fab"><i className="far fa-user fa-sm"></i></div>
 </Link>
 
@@ -18,35 +98,53 @@ const Settings = () => {
 
 <div className="py-2">
 
-  <form action="" method="" enctype="multipart/form-data">
 
-    <div className="d-flex align-items-start py-3 border-bottom"> <img src="https://i2-prod.mirror.co.uk/incoming/article23362081.ece/ALTERNATES/s1200c/0_DSOL_Yael_Shelbia_7.jpg" className="img" alt="Profile picture" />
+
+    <div className="d-flex align-items-start py-3 border-bottom"> <img src={user.profilePicture} className="img" alt="Profile picture" />
       <div className="pl-sm-4 pl-2" id="img-section"> <b>Profile photo</b>
-          <p>Accepted file type .png. Less than 5MB</p> <button className="btn button border"><b>Upload</b></button>
+          <p>Accepted file type .png, .jpg and .jpeg.</p> 
+          
+              
+          <input
+                            type="file"
+                            accept="image/png, image/jpeg, image/jpg"
+                            onChange={(event) => {
+                              uploadProfileImage(event.target.files);
+                            }}
+                          />
+
       </div>
   </div>
 
-  <div className="d-flex align-items-start py-3 border-bottom"> <img src="https://images.unsplash.com/photo-1520758594221-872948699332?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YnJpY2slMjB3YWxsfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80" className="img" alt="Background picture" />
+  <div className="d-flex align-items-start py-3 border-bottom"> <img src={user.backgroundPicture} className="img" alt="Background picture" />
     <div className="pl-sm-4 pl-2" id="img-section"> <b>Background photo</b>
-        <p>Accepted file type .png. Less than 5MB</p> <button className="btn button border"><b>Upload</b></button>
+        <p>Accepted file type .png, .jpg and .jpeg.</p>
+        
+        
+         
+         
+        
+         <input
+                            type="file"
+                            accept="image/png, image/jpeg , image/jpg"
+                            onChange={(event) => {
+                              uploadBackgroundImage(event.target.files);
+                            }}
+                          />
+
+         
+
+
     </div>
 </div>
 
   
 
     <div className="row py-2">
-      <div className="col-md-6"> <label for="firstname">Full name</label> <input type="text" className="bg-light form-control" /> </div>
-      <div className="col-md-6"> <label for="firstname">Username</label> <input type="text" className="bg-light form-control" /> </div>
+      <div className="col-md-6"> <label for="firstname">Email</label> <input type="text" value={user.email} className="bg-light form-control" /></div>
+      <div className="col-md-6"> <label for="firstname">Username</label> <input type="text" value={user.username} className="bg-light form-control" /> </div>
     </div>
 
-  <div className="row py-2">
-      <div className="col-md-6"> <label for="email">Email address</label> <input type="email" className="bg-light form-control" /> </div>
-  </div>
-
-    <div className="py-3 pb-4 border-bottom"> 
-      <button type="submit" className="btn btn-primary mr-3">Save</button> 
-      <a href="/profile.html" className="btn border button">Cancel</a> </div>
-  </form>
 
     <div className="d-sm-flex align-items-center pt-3" id="deactivate">
         <div> <b>Deactivate your account</b>

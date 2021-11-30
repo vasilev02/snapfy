@@ -4,34 +4,69 @@ import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import firebase from "../firebase";
 import "react-toastify/dist/ReactToastify.css";
+import Axios from "axios";
 
 const Profile = ({ match }) => {
   const [user, setUser] = useState({});
   const [error, setError] = useState("");
+
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [accessedUserId, setAccessedUserId] = useState(match.params.userId);
+  const [checkMyProfile, setCheckMyProfile] = useState(true);
+
   const { logout } = useAuth();
   const history = useHistory();
 
-  const userId = localStorage.getItem("userId");
-  const id = match.params.userId;
-  let checkMyProfile = true;
+  const uploadImage = (files) => {
+    console.log(files[0]);
+    const formData = new FormData();
+    formData.append("file", files[0]);
+    formData.append("upload_preset", "eww0g74o");
+    Axios.post(
+      "https://api.cloudinary.com/v1_1/defiefioi/image/upload",
+      formData
+    ).then((response) => {
 
-  if (id) {
 
-    if (userId !== id) {
-      checkMyProfile = false;
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(userId)
+        .get()
+        .then(function (doc) {
+          let photos = doc.data().photos;
+          photos.push(response.data.public_id);
+          
+          firebase.firestore().collection("users").doc(userId).update({
+            photos: photos
+        });
+
+
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+    });
+  };
+
+  useEffect(() => {
+    if (accessedUserId) {
+      if (userId !== accessedUserId) {
+        setCheckMyProfile(false);
+      }
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(accessedUserId)
+        .get()
+        .then(function (doc) {
+          setUser(doc.data());
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
     }
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(id)
-      .get()
-      .then(function (doc) {
-        setUser(doc.data());
-      })
-      .catch(function (error) {
-        console.log("Error getting document:", error);
-      });
-  }
+  }, []);
 
   async function handleLogout() {
     setError("");
@@ -72,23 +107,23 @@ const Profile = ({ match }) => {
                 <span className="username">@{user.username}</span>
               </div>
               <ul className="social-icons">
-
                 {checkMyProfile ? (
-
-<>
-                    <form method="post" enctype="multipart/form-data">
-                      <label for="apply">
-                        <input
-                          type="file"
-                          name=""
-                          id="apply"
-                          accept="image/*,.pdf"
-                        />
-                        <li>
-                          <i className="far fa-images"></i>
-                        </li>
-                      </label>
-                    </form>
+                  <>
+                    <label for="avatar">
+                      <li>
+                        <i className="far fa-images">
+                          <input
+                            type="file"
+                            id="avatar"
+                            name="avatar"
+                            accept="image/png, image/jpeg"
+                            onChange={(event) => {
+                              uploadImage(event.target.files);
+                            }}
+                          />
+                        </i>
+                      </li>
+                    </label>
 
                     <Link to="/settings">
                       <li>
@@ -100,9 +135,7 @@ const Profile = ({ match }) => {
                       <i className="fas fa-sign-out-alt"></i>
                     </li>
                   </>
-
                 ) : (
-
                   <>
                     <li>
                       <i className="fas fa-check"></i>
@@ -111,14 +144,7 @@ const Profile = ({ match }) => {
                       <i className="fas fa-plus"></i>
                     </li>
                   </>
-
                 )}
-
-              
-
-
-                
-
               </ul>
             </div>
           </div>

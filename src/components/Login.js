@@ -36,7 +36,7 @@ const Login = () => {
           querySnapshot.forEach(function (doc) {
             if(doc.data().email === email){
                localStorage.setItem("userId", doc.id);
-               history.push("/people/"+doc.id);
+               history.push("/people");
             }
           });
         });

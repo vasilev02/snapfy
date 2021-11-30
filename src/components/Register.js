@@ -63,10 +63,10 @@ const Register = () => {
         peopleWhoFollowedMe: [],
       }).then(function(docRef) {
 
+        localStorage.setItem("userId", docRef.id);
         firebase.firestore().collection('users').doc(docRef.id).set({
           id: docRef.id
       }, { merge: true });
-
     });
 
       

@@ -4,8 +4,9 @@ import { Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 import firebase from "../firebase";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { firestore } from "firebase";
 
 const Register = () => {
   const usernameRef = useRef();
@@ -60,9 +61,17 @@ const Register = () => {
         followersCount: 0,
         peopleWhoFollow: [],
         peopleWhoFollowedMe: [],
-      });
+      }).then(function(docRef) {
+
+        firebase.firestore().collection('users').doc(docRef.id).set({
+          id: docRef.id
+      }, { merge: true });
+
+    });
+
       
-      history.push("/profile");
+      
+      history.push("/people");
       toast.success("Successfully registered to snapfy",{position: toast.POSITION.TOP_CENTER});
     } catch {
       toast.error("Failed to create an account",{position: toast.POSITION.TOP_CENTER,draggable: true,});

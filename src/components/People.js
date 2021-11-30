@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import React, {useState,  useEffect} from "react";
 import firebase from "../firebase";
-import UserCard from "./UserCard"
+import UserCard from "./UserCard";
 
 const People = () => {
 
   const [users, setUsers] = useState([]);
   const ref = firebase.firestore().collection("users");
+  const userId = localStorage.getItem("userId");
 
     function getUsers() {
       ref.onSnapshot((querySnapshot) => {
@@ -26,7 +27,7 @@ const People = () => {
 
   return (
     <>
-    <Link to="/profile">
+    <Link to={"/people/"+userId}>
         <div className="fab">
           <i className="far fa-user fa-sm"></i>
         </div>
@@ -69,7 +70,7 @@ const People = () => {
 
             
 
-            {users.map(x => <UserCard user={x}/>)}
+            {users.map(x => <UserCard key={x.id} user={x}/>)}
 
 
   

@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from "./contexts/AuthContext"
 import PrivateRoute from "./components/PrivateRoute"
 import PublicRoute from './components/PublicRoute';
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -29,7 +29,8 @@ function App() {
         <PublicRoute path="/forgot-password" component={ForgotPassword} />
         <PrivateRoute path="/profile" component={Profile} />
         <PrivateRoute path="/settings" component={Settings} />
-        <PrivateRoute path="/people" component={People} />
+        <PrivateRoute path="/people" exact component={People} />
+        <PrivateRoute path="/people/:userId" component={Profile} />
         <Route path='*' exact={true} component={PageNotFound} />
       </Switch>
     </AuthProvider>

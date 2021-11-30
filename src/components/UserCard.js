@@ -14,9 +14,9 @@ const UserCard = ({
               >
                 
 
-                <Link to="/profile">
+                <Link to={`/people/${user.id}`}>
 
-                <a className="profile-link" href="/profile.html">
+                
                   <div className="advisor_thumb">
                     <img
                       src={user.profilePicture}
@@ -29,7 +29,7 @@ const UserCard = ({
                     <p className="designation">{user.username}</p>
                     <p className="designation">{user.followersCount} followers</p>
                   </div>
-                </a>
+                
 
                 </Link>
                 

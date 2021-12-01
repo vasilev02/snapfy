@@ -11,6 +11,7 @@ const Profile = ({ match }) => {
   const [user, setUser] = useState({});
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState("");
+  const [followed, setFollowed] = useState(false);
 
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
   const [accessedUserId, setAccessedUserId] = useState(match.params.userId);
@@ -27,29 +28,102 @@ const Profile = ({ match }) => {
       "https://api.cloudinary.com/v1_1/defiefioi/image/upload",
       formData
     ).then((response) => {
-
-
       firebase
         .firestore()
         .collection("users")
         .doc(userId)
         .get()
         .then(function (doc) {
-
           let userPhotos = doc.data().photos;
           //url or public_id
           userPhotos.push(response.data.url);
           setPhotos(userPhotos);
 
           firebase.firestore().collection("users").doc(userId).update({
-            photos: userPhotos
-        });
-
+            photos: userPhotos,
+          });
         })
         .catch(function (error) {
           console.log("Error getting document:", error);
         });
     });
+  };
+
+  const followUser = () => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(userId)
+      .get()
+      .then(function (doc) {
+        let myFollows = doc.data().peopleWhoFollow;
+
+        let result = false;
+        myFollows.map((x) => {
+          if (x === accessedUserId) {
+            result = true;
+          }
+        });
+
+        if (result === false) {
+          myFollows.push(accessedUserId);
+          firebase.firestore().collection("users").doc(userId).update({
+            peopleWhoFollow: myFollows,
+          });
+
+          firebase
+
+      .firestore()
+      .collection("users")
+      .doc(accessedUserId)
+      .get()
+      .then(function (doc) {
+        let othersFollowedMe = doc.data().peopleWhoFollowedMe;
+
+        othersFollowedMe.push(userId);
+          firebase.firestore().collection("users").doc(accessedUserId).update({
+            peopleWhoFollowedMe: othersFollowedMe,
+          });
+
+      });
+
+        }
+      });
+  };
+
+  const unFollowUser = () => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(userId)
+      .get()
+      .then(function (doc) {
+        let myFollows = doc.data().peopleWhoFollow;
+
+        myFollows = myFollows.filter(e => e !== accessedUserId);
+
+          firebase.firestore().collection("users").doc(userId).update({
+            peopleWhoFollow: myFollows,
+          });
+
+          firebase
+      .firestore()
+      .collection("users")
+      .doc(accessedUserId)
+      .get()
+      .then(function (doc) {
+        let othersFollowedMe = doc.data().peopleWhoFollowedMe;
+
+        othersFollowedMe = othersFollowedMe.filter(e => e !== userId);
+
+          firebase.firestore().collection("users").doc(accessedUserId).update({
+            peopleWhoFollowedMe: othersFollowedMe,
+          });
+
+      });
+
+        
+      });
   };
 
   useEffect(() => {
@@ -64,8 +138,15 @@ const Profile = ({ match }) => {
         .get()
         .then(function (doc) {
           setUser(doc.data());
-          setPhotos(doc.data().photos);
-          console.log(photos);
+          
+          let followedMePeople = doc.data().peopleWhoFollowedMe;
+          followedMePeople.map(x => {
+            if(x === userId){
+              setFollowed(true);
+            }
+          })
+
+
         })
         .catch(function (error) {
           console.log("Error getting document:", error);
@@ -142,12 +223,23 @@ const Profile = ({ match }) => {
                   </>
                 ) : (
                   <>
-                    <li>
+
+{followed ? (
+
+<li onClick={unFollowUser}>
                       <i className="fas fa-check"></i>
                     </li>
-                    <li>
+
+) : (
+
+ <li onClick={followUser}>
                       <i className="fas fa-plus"></i>
                     </li>
+
+)}
+
+                    
+                   
                   </>
                 )}
               </ul>
@@ -157,15 +249,10 @@ const Profile = ({ match }) => {
 
         <div className="container">
           <div className="row">
-
-          {photos.map(x => {
-            console.log(x);
-           <ImageCard key={x} url={x} />
-
-          })}
-
-
-            
+            {photos.map((x) => {
+              console.log(x);
+              <ImageCard key={x} url={x} />;
+            })}
           </div>
         </div>
       </main>

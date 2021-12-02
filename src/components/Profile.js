@@ -57,6 +57,7 @@ const Profile = ({ match }) => {
       .get()
       .then(function (doc) {
         let myFollows = doc.data().peopleWhoFollow;
+        let followingCount = Number(doc.data().followingCount) + 1;
 
         let result = false;
         myFollows.map((x) => {
@@ -69,22 +70,25 @@ const Profile = ({ match }) => {
           myFollows.push(accessedUserId);
           firebase.firestore().collection("users").doc(userId).update({
             peopleWhoFollow: myFollows,
+            followingCount: followingCount
           });
 
           firebase
-
       .firestore()
       .collection("users")
       .doc(accessedUserId)
       .get()
       .then(function (doc) {
         let othersFollowedMe = doc.data().peopleWhoFollowedMe;
+        let followCount = Number(doc.data().followersCount) + 1;
 
         othersFollowedMe.push(userId);
           firebase.firestore().collection("users").doc(accessedUserId).update({
             peopleWhoFollowedMe: othersFollowedMe,
+            followersCount: followCount
           });
-
+          toast.success("Successfully followed " + doc.data().username,{position: toast.POSITION.TOP_CENTER});
+          history.push("/people/" + accessedUserId);
       });
 
         }
@@ -99,11 +103,22 @@ const Profile = ({ match }) => {
       .get()
       .then(function (doc) {
         let myFollows = doc.data().peopleWhoFollow;
+        let followingCount = Number(doc.data().followingCount) -1;
+
+        let result = false;
+        myFollows.map((x) => {
+          if (x === accessedUserId) {
+            result = true;
+          }
+        });
+
+        if(result === true){
 
         myFollows = myFollows.filter(e => e !== accessedUserId);
 
           firebase.firestore().collection("users").doc(userId).update({
             peopleWhoFollow: myFollows,
+            followingCount: followingCount
           });
 
           firebase
@@ -113,15 +128,18 @@ const Profile = ({ match }) => {
       .get()
       .then(function (doc) {
         let othersFollowedMe = doc.data().peopleWhoFollowedMe;
+        let followCount = Number(doc.data().followersCount) - 1;
 
         othersFollowedMe = othersFollowedMe.filter(e => e !== userId);
 
           firebase.firestore().collection("users").doc(accessedUserId).update({
             peopleWhoFollowedMe: othersFollowedMe,
+            followersCount: followCount
           });
-
+          toast.success("Successfully unfollowed " + doc.data().username,{position: toast.POSITION.TOP_CENTER});
+          history.push("/people/" + accessedUserId);
       });
-
+    }
         
       });
   };

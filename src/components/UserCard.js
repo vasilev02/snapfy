@@ -25,9 +25,10 @@ const UserCard = ({
                   </div>
 
                   <div className="single_advisor_details_info">
-                    <h6>{user.fullName}</h6>
-                    <p className="designation">{user.username}</p>
+                    <h6>{user.username}</h6>
+                    <p className="designation">{user.fullName}</p>
                     <p className="designation">{user.followersCount} followers</p>
+                    <p className="designation">{user.followingCount} following</p>
                   </div>
                 
 

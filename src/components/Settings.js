@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import firebase from "../firebase";
 import Axios from "axios";
-import  { Redirect } from 'react-router-dom'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Settings = ({ match }) => {
 
@@ -37,6 +38,7 @@ const Settings = ({ match }) => {
               firebase.firestore().collection("users").doc(userId).update({
                 profilePicture: response.data.url
             });
+            toast.success("Successfully uploaded profile picture",{position: toast.POSITION.TOP_CENTER});
             history.push("/people/"+ userId);
             })
         });
@@ -59,6 +61,7 @@ const Settings = ({ match }) => {
               firebase.firestore().collection("users").doc(userId).update({
                 backgroundPicture: response.data.url
             });
+            toast.success("Successfully uploaded background picture",{position: toast.POSITION.TOP_CENTER});
             history.push("/people/"+ userId);
             })
         });

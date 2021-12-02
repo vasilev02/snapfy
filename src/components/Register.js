@@ -59,6 +59,7 @@ const Register = () => {
         backgroundPicture: "https://res.cloudinary.com/defiefioi/image/upload/v1638190146/snapfy/materialstyle-1638190120334-3015_cvndhi.jpg",
         photos: [],
         followersCount: 0,
+        followingCount: 0,
         peopleWhoFollow: [],
         peopleWhoFollowedMe: [],
       }).then(function(docRef) {

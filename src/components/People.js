@@ -6,6 +6,7 @@ import UserCard from "./UserCard";
 const People = () => {
 
   const [users, setUsers] = useState([]);
+  const [searchItem, setSearchItem] = useState("");
   const ref = firebase.firestore().collection("users");
   const userId = localStorage.getItem("userId");
 
@@ -42,9 +43,12 @@ const People = () => {
                 className="search_input"
                 type="text"
                 name=""
-                placeholder="Search... @"
+                placeholder="Search..."
+                onChange={(event) =>{
+                  setSearchItem(event.target.value)
+                }}
               />
-              <a href="#" className="search_icon">
+              <a className="search_icon">
                 <i className="fas fa-search"></i>
               </a>
             </div>
@@ -70,7 +74,15 @@ const People = () => {
 
             
 
-            {users.map(x => <UserCard key={x.id} user={x}/>)}
+            {users.filter((val) => {
+
+if(searchItem === ''){
+  return val;
+}else if(val.username.toLowerCase().includes(searchItem.toLowerCase())){
+return val;
+}
+
+            }).map(x => <UserCard key={x.id} user={x}/>)}
 
 
   

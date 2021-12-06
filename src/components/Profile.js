@@ -9,7 +9,7 @@ import ImageCard from "./ImageCard";
 
 const Profile = ({ match }) => {
   const [user, setUser] = useState({});
-  const [photos, setPhotos] = useState([]);
+  let photos = [];
   const [error, setError] = useState("");
   const [followed, setFollowed] = useState(false);
 
@@ -37,7 +37,7 @@ const Profile = ({ match }) => {
           let userPhotos = doc.data().photos;
           //url or public_id
           userPhotos.push(response.data.url);
-          setPhotos(userPhotos);
+          
 
           firebase.firestore().collection("users").doc(userId).update({
             photos: userPhotos,
@@ -156,6 +156,8 @@ const Profile = ({ match }) => {
         .get()
         .then(function (doc) {
           setUser(doc.data());
+          photos = doc.data().photos;
+          console.log(photos);
           
           let followedMePeople = doc.data().peopleWhoFollowedMe;
           followedMePeople.map(x => {
@@ -254,10 +256,7 @@ const Profile = ({ match }) => {
                       <i className="fas fa-plus"></i>
                     </li>
 
-)}
-
-                    
-                   
+)}                 
                   </>
                 )}
               </ul>

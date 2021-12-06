@@ -1,39 +1,35 @@
 import { Link } from "react-router-dom";
-import React, {useState,  useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "../firebase";
 import UserCard from "./UserCard";
 
 const People = () => {
-
   const [users, setUsers] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const ref = firebase.firestore().collection("users");
   const userId = localStorage.getItem("userId");
 
-    function getUsers() {
-      ref.onSnapshot((querySnapshot) => {
-        const items = [];
-        querySnapshot.forEach((doc) => {
-          items.push(doc.data());
-        });
-        setUsers(items);
+  function getUsers() {
+    ref.onSnapshot((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
       });
-    }
-  
-    useEffect(() => {
-      getUsers();
-    }, []);
+      setUsers(items);
+    });
+  }
 
-    
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <>
-    <Link to={"/people/"+userId}>
+      <Link to={"/people/" + userId}>
         <div className="fab">
           <i className="far fa-user fa-sm"></i>
         </div>
-    </Link>
-      
+      </Link>
 
       <header>
         <div className="container h-100">
@@ -44,8 +40,8 @@ const People = () => {
                 type="text"
                 name=""
                 placeholder="Search..."
-                onChange={(event) =>{
-                  setSearchItem(event.target.value)
+                onChange={(event) => {
+                  setSearchItem(event.target.value);
                 }}
               />
               <a className="search_icon">
@@ -71,21 +67,21 @@ const People = () => {
             </div>
           </div>
           <div className="row">
-
-            
-
-            {users.filter((val) => {
-
-if(searchItem === ''){
-  return val;
-}else if(val.username.toLowerCase().includes(searchItem.toLowerCase())){
-return val;
-}
-
-            }).map(x => <UserCard key={x.id} user={x}/>)}
-
-
-  
+            {users
+              .filter((val) => {
+                if (searchItem === "") {
+                  return {
+                    val,
+                  };
+                } else if (
+                  val.username.toLowerCase().includes(searchItem.toLowerCase())
+                ) {
+                  return val;
+                }
+              })
+              .map((x) => (
+                <UserCard key={x.id} user={x} />
+              ))}
           </div>
         </div>
       </main>
@@ -93,8 +89,8 @@ return val;
       <style jsx>{`
         @import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
 
-        .profile-link{
-          text-decoration:none;
+        .profile-link {
+          text-decoration: none;
         }
 
         .searchbar {
@@ -128,6 +124,11 @@ return val;
           color: #ea4335;
         }
 
+        .image-logo {
+          width: 20px;
+          margin: 0px auto;
+        }
+
         .search_icon {
           height: 40px;
           width: 40px;
@@ -145,8 +146,8 @@ return val;
           background: #eee;
         }
 
-        .row{
-          justify-content:center;
+        .row {
+          justify-content: center;
         }
 
         .single_advisor_profile {

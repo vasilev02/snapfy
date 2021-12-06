@@ -9,7 +9,7 @@ import ImageCard from "./ImageCard";
 
 const Profile = ({ match }) => {
   const [user, setUser] = useState({});
-  let photos = [];
+  const [images, setImages] = useState([]);
   const [error, setError] = useState("");
   const [followed, setFollowed] = useState(false);
 
@@ -37,11 +37,10 @@ const Profile = ({ match }) => {
           let userPhotos = doc.data().photos;
           //url or public_id
           userPhotos.push(response.data.url);
-          
-
           firebase.firestore().collection("users").doc(userId).update({
             photos: userPhotos,
           });
+          setImages(userPhotos);
         })
         .catch(function (error) {
           console.log("Error getting document:", error);
@@ -88,7 +87,7 @@ const Profile = ({ match }) => {
             followersCount: followCount
           });
           toast.success("Successfully followed " + doc.data().username,{position: toast.POSITION.TOP_CENTER});
-          history.push("/people/" + accessedUserId);
+          setFollowed(true);
       });
 
         }
@@ -137,7 +136,7 @@ const Profile = ({ match }) => {
             followersCount: followCount
           });
           toast.success("Successfully unfollowed " + doc.data().username,{position: toast.POSITION.TOP_CENTER});
-          history.push("/people/" + accessedUserId);
+          setFollowed(false);
       });
     }
         
@@ -156,8 +155,7 @@ const Profile = ({ match }) => {
         .get()
         .then(function (doc) {
           setUser(doc.data());
-          photos = doc.data().photos;
-          console.log(photos);
+          setImages(doc.data().photos);
           
           let followedMePeople = doc.data().peopleWhoFollowedMe;
           followedMePeople.map(x => {
@@ -257,6 +255,10 @@ const Profile = ({ match }) => {
                     </li>
 
 )}                 
+
+<li >
+{images.length}&#160; <i className="fas fa-file-image"></i>
+                    </li>
                   </>
                 )}
               </ul>
@@ -264,14 +266,15 @@ const Profile = ({ match }) => {
           </div>
         </div>
 
-        <div className="container">
-          <div className="row">
-            {photos.map((x) => {
-              console.log(x);
-              <ImageCard key={x} url={x} />;
-            })}
-          </div>
-        </div>
+        
+<div className="gallery-image">
+
+
+{images.map((x => <ImageCard key={x} imageUrl={x} /> ))}
+</div>
+
+          
+        
       </main>
 
       <style jsx>{`
@@ -492,6 +495,77 @@ const Profile = ({ match }) => {
           position: absolute;
           width: 1px;
         }
+
+        .gallery-image {
+          padding: 10px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        
+        .gallery-image img {
+          object-fit: cover,
+          height: 350px;
+          width: 350px;
+          transform: scale(1.0);
+          transition: transform 0.4s ease;
+        }
+        
+        .img-box {
+          box-sizing: content-box;
+          margin: 10px;
+          height: 350px;
+          width: 350px;
+          overflow: hidden;
+          display: inline-block;
+          color: white;
+          position: relative;
+          background-color: white;
+        }
+        
+        .caption {
+          position: absolute;
+          bottom: 5px;
+          left: 20px;
+          opacity: 0.0;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .transparent-box {
+          height: 100px;
+          width: 350px;
+          background-color:rgba(0, 0, 0, 0);
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          transition: background-color 0.3s ease;
+        }
+        
+        .img-box:hover img { 
+          transform: scale(1.1);
+        }
+        
+        .img-box:hover .transparent-box {
+          background-color:rgba(0, 0, 0, 0.5);
+        }
+        
+        .img-box:hover .caption {
+          transform: translateY(-20px);
+          opacity: 1.0;
+        }
+        
+        .img-box:hover {
+          cursor: pointer;
+        }
+        
+        .caption > p:nth-child(2) {
+          font-size: 0.8em;
+        }
+        
+        .opacity-low {
+          opacity: 0.5;
+        }
+        
       `}</style>
     </>
   );

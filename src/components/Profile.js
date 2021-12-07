@@ -10,6 +10,8 @@ import ImageCard from "./ImageCard";
 const Profile = ({ match }) => {
   const [user, setUser] = useState({});
   const [images, setImages] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
   const [error, setError] = useState("");
   const [followed, setFollowed] = useState(false);
 
@@ -41,6 +43,7 @@ const Profile = ({ match }) => {
             photos: userPhotos,
           });
           setImages(userPhotos);
+          toast.success("Successfully added image",{position: toast.POSITION.TOP_CENTER});
         })
         .catch(function (error) {
           console.log("Error getting document:", error);
@@ -156,6 +159,8 @@ const Profile = ({ match }) => {
         .then(function (doc) {
           setUser(doc.data());
           setImages(doc.data().photos);
+          setFollowers(doc.data().peopleWhoFollowedMe);
+          setFollowing(doc.data().peopleWhoFollow);
           
           let followedMePeople = doc.data().peopleWhoFollowedMe;
           followedMePeople.map(x => {
@@ -213,7 +218,7 @@ const Profile = ({ match }) => {
               <ul className="social-icons">
                 {checkMyProfile ? (
                   <>
-                    <label for="avatar">
+                    <label htmlFor="avatar">
                       <li>
                         <i className="far fa-images">
                           <input
@@ -256,18 +261,39 @@ const Profile = ({ match }) => {
 
 )}                 
 
-<li >
-{images.length}&#160; <i className="fas fa-file-image"></i>
-                    </li>
+
                   </>
                 )}
+                <a href="#gallery">
+  <li>
+{images.length}&#160; <i className="fas fa-file-image"></i>
+                    </li>
+</a>
+
+<Link to={"/followers/" + accessedUserId}>
+<li>
+{followers.length}&#160; <i className="fas fa-user-check"></i>
+                    </li>
+  </Link>
+
+<Link to={"/following/" + accessedUserId}>
+<li>
+{following.length}&#160; <i class="fas fa-user-plus"></i>
+                    </li>
+  </Link>
+
+                    
               </ul>
             </div>
+            
           </div>
+          
         </div>
 
         
-<div className="gallery-image">
+
+        
+<div className="gallery-image" id="gallery">
 
 
 {images.map((x => <ImageCard key={x} imageUrl={x} /> ))}

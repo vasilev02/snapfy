@@ -75,7 +75,6 @@ const Settings = ({ match }) => {
             .get()
             .then(function (doc) {
               setUser(doc.data());
-              console.log(user);
             })
             .catch(function (error) {
               console.log("Error getting document:", error);
@@ -144,8 +143,8 @@ const Settings = ({ match }) => {
   
 
     <div className="row py-2">
-      <div className="col-md-6"> <label for="firstname">Email</label> <input type="text" value={user.email} className="bg-light form-control" /></div>
-      <div className="col-md-6"> <label for="firstname">Username</label> <input type="text" value={user.username} className="bg-light form-control" /> </div>
+      <div className="col-md-6"> <label htmlFor="firstname">Email</label> <input type="text" value={user.email} className="bg-light form-control" /></div>
+      <div className="col-md-6"> <label htmlFor="firstname">Username</label> <input type="text" value={user.username} className="bg-light form-control" /> </div>
     </div>
 
 

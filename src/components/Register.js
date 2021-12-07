@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import firebase from "../firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { firestore } from "firebase";
 
 const Register = () => {
   const usernameRef = useRef();

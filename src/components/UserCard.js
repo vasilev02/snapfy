@@ -13,10 +13,8 @@ const UserCard = ({
                 styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
               >
                 
-
                 <Link to={`/people/${user.id}`}>
-
-                
+ 
                   <div className="advisor_thumb">
                     <img
                       src={user.profilePicture}

@@ -4,6 +4,8 @@ import Register from './components/Register';
 import Profile from './components/Profile';
 import Settings from './components/Settings';
 import People from './components/People';
+import Followers from './components/Followers';
+import Following from './components/Following';
 import ForgotPassword from './components/ForgotPassword';
 import PageNotFound from './components/PageNotFound';
 import './App.css';
@@ -31,6 +33,8 @@ function App() {
         <PrivateRoute path="/settings/:userId" component={Settings} />
         <PrivateRoute path="/people" exact component={People} />
         <PrivateRoute path="/people/:userId" component={Profile} />
+        <PrivateRoute path="/followers/:userId" component={Followers} />
+        <PrivateRoute path="/following/:userId" component={Following} />
         <Route path='*' exact={true} component={PageNotFound} />
       </Switch>
     </AuthProvider>

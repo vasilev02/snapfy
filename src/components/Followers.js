@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import firebase from "../firebase";
 import UserCard from "./UserCard";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Followers = ({ match }) => {
+  const history = useHistory();
   const [followers, setFollowers] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [accessedUserId, setAccessedUserId] = useState(match.params.userId);
@@ -36,6 +39,15 @@ const Followers = ({ match }) => {
       .doc(accessedUserId)
       .get()
       .then(function (doc) {
+        if (accessedUserId !== userId) {
+          if (doc.data().hideFollowers === true) {
+            toast.error("No permission", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            history.push("/people/" + match.params.userId);
+          }
+        }
+
         userIds = doc.data().peopleWhoFollowedMe;
       });
 
@@ -95,7 +107,9 @@ const Followers = ({ match }) => {
                 data-wow-delay="0.2s"
                 styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
               >
-                <h3>Find {username}'s followers ({followers.length})</h3>
+                <h3>
+                  Find {username}'s followers ({followers.length})
+                </h3>
                 <div className="line"></div>
               </div>
             </div>
@@ -108,7 +122,9 @@ const Followers = ({ match }) => {
                     val,
                   };
                 } else if (
-                  val.user.username.toLowerCase().includes(searchItem.toLowerCase())
+                  val.user.username
+                    .toLowerCase()
+                    .includes(searchItem.toLowerCase())
                 ) {
                   return val;
                 }

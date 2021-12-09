@@ -61,7 +61,7 @@ const People = () => {
                 data-wow-delay="0.2s"
                 styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
               >
-                <h3>Find your friends</h3>
+                <h3>Follow someone new</h3>
                 <div className="line"></div>
               </div>
             </div>

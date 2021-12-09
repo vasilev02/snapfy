@@ -17,7 +17,17 @@ const Profile = ({ match }) => {
 
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
   const [accessedUserId, setAccessedUserId] = useState(match.params.userId);
+
+  let checkUser = true;
+  if(accessedUserId === userId){
+    checkUser = false;
+  }
+
   const [checkMyProfile, setCheckMyProfile] = useState(true);
+  const [hidePhotos, setHidePhotos] = useState(false);
+  const [hideFollowers, setHideFollowers] = useState(false);
+  const [hideFollowing, setHideFollowing] = useState(false);
+
 
   const { logout } = useAuth();
   const history = useHistory();
@@ -159,6 +169,9 @@ const Profile = ({ match }) => {
         .then(function (doc) {
           setUser(doc.data());
           setImages(doc.data().photos);
+          setHidePhotos(doc.data().hidePhotos);
+          setHideFollowers(doc.data().hideFollowers);
+          setHideFollowing(doc.data().hideFollowing);
           setFollowers(doc.data().peopleWhoFollowedMe);
           setFollowing(doc.data().peopleWhoFollow);
           
@@ -213,7 +226,7 @@ const Profile = ({ match }) => {
             <div className="overlay">
               <div className="about d-flex flex-column">
                 <h4 className="fullName">{user.email}</h4>
-                <span className="username">@{user.username}</span>
+                <span className="username">{user.username}</span>
               </div>
               <ul className="social-icons">
                 {checkMyProfile ? (
@@ -265,22 +278,52 @@ const Profile = ({ match }) => {
                   </>
                 )}
                 <a href="#gallery">
+
+
+{hidePhotos && checkUser ? 
+
+(
+<></>
+)
+
+:
+
+(
   <li>
-{images.length}&#160; <i className="fas fa-file-image"></i>
+  {images.length}&#160; <i className="fas fa-file-image"></i>
                     </li>
+  
+)}
 </a>
 
+{hideFollowers && checkUser ? 
+
+(
+<></>
+) : 
+
+(
 <Link to={"/followers/" + accessedUserId}>
 <li>
 {followers.length}&#160; <i className="fas fa-user-check"></i>
                     </li>
   </Link>
+)}
 
+{hideFollowing && checkUser ? 
+
+(
+<></>
+) : 
+
+(
 <Link to={"/following/" + accessedUserId}>
 <li>
 {following.length}&#160; <i class="fas fa-user-plus"></i>
                     </li>
   </Link>
+)}
+
 
                     
               </ul>
@@ -292,14 +335,39 @@ const Profile = ({ match }) => {
 
         
 
-        
-<div className="gallery-image" id="gallery">
+{hidePhotos && checkUser ? 
+(
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">No photos</h1>
+    <p class="lead">{user.username}'s gallery is private !</p>
+  </div>
+</div>
+) :
 
+(
 
+  <>
+  {images.length > 0 ? 
+  
+  (
+    <div className="gallery-image" id="gallery">
 {images.map((x => <ImageCard key={x} imageUrl={x} /> ))}
 </div>
+  ) :
+  
+  (
+    <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">No photos</h1>
+    <p class="lead">{user.username}'s gallery is empty !</p>
+  </div>
+</div>
+  )}
+  </>
 
-          
+
+)}
         
       </main>
 

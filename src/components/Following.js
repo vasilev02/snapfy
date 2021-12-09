@@ -1,9 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import firebase from "../firebase";
 import UserCard from "./UserCard";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Following = ({ match }) => {
+  const history = useHistory();
   const [following, setFollowing] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const [accessedUserId, setAccessedUserId] = useState(match.params.userId);
@@ -36,6 +39,12 @@ const Following = ({ match }) => {
       .doc(accessedUserId)
       .get()
       .then(function (doc) {
+        if (accessedUserId !== userId) {
+        if (doc.data().hideFollowers === true) {
+          toast.error("No permission", { position: toast.POSITION.TOP_CENTER });
+          history.push("/people/" + match.params.userId);
+        }
+      }
         userIds = doc.data().peopleWhoFollow;
       });
 

@@ -25,8 +25,29 @@ const UserCard = ({
                   <div className="single_advisor_details_info">
                     <h6>{user.username}</h6>
                     <p className="designation">{user.fullName}</p>
-                    <p className="designation">{user.followersCount} followers</p>
-                    <p className="designation">{user.followingCount} following</p>
+
+
+
+                    {user.hideFollowers ? 
+                    
+                    (
+                      <p className="designation"><i class="fas fa-lock"></i> followers</p>
+                    ) : 
+                    
+                    (
+                      <p className="designation">{user.followersCount} followers</p>
+                    )}
+
+                    {user.hideFollowing ? 
+                    
+                    (
+                      <p className="designation"><i class="fas fa-lock"></i> following</p>
+                    ) : 
+                    
+                    (
+                      <p className="designation">{user.followingCount} following</p>
+                    )}
+
                   </div>
                 
 

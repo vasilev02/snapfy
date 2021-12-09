@@ -61,6 +61,9 @@ const Register = () => {
         followingCount: 0,
         peopleWhoFollow: [],
         peopleWhoFollowedMe: [],
+        hidePhotos: false,
+        hideFollowers: false,
+        hideFollowing: false,
       }).then(function(docRef) {
 
         localStorage.setItem("userId", docRef.id);

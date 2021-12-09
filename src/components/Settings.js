@@ -16,6 +16,9 @@ const Settings = ({ match }) => {
 
     const [user, setUser] = useState({});
     const [profilePicture, setProfilePicture] = useState("");
+    const [hidePhotos, setHidePhotos] = useState(false);
+    const [hideFollowers, setHideFollowers] = useState(false);
+    const [hideFollowing, setHideFollowing] = useState(false);
     
     
 
@@ -67,6 +70,48 @@ const Settings = ({ match }) => {
         });
       };
 
+      const lockPhotos = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          hidePhotos: true
+        });
+        setHidePhotos(true);
+      };
+
+      const unlockPhotos = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          hidePhotos: false
+        });
+        setHidePhotos(false);
+      };
+
+      const lockFollowers = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          hideFollowers: true
+        });
+        setHideFollowers(true);
+      };
+
+      const unlockFollowers = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          hideFollowers: false
+        });
+        setHideFollowers(false);
+      };
+
+      const lockFollowing = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          hideFollowing: true
+        });
+        setHideFollowing(true);
+      };
+
+      const unlockFollowing = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          hideFollowing: false
+        });
+        setHideFollowing(false);
+      };
+
     useEffect(() => {
           firebase
             .firestore()
@@ -75,6 +120,9 @@ const Settings = ({ match }) => {
             .get()
             .then(function (doc) {
               setUser(doc.data());
+              setHidePhotos(doc.data().hidePhotos);
+              setHideFollowers(doc.data().hideFollowers);
+              setHideFollowing(doc.data().hideFollowing);
             })
             .catch(function (error) {
               console.log("Error getting document:", error);
@@ -140,7 +188,39 @@ const Settings = ({ match }) => {
     </div>
 </div>
 
-  
+{hidePhotos ? 
+(
+  <button onClick={unlockPhotos} className="btn btn-success"><i className="fas fa-lock-open"></i> Unlock photos</button>
+)
+
+: 
+
+(
+<button onClick={lockPhotos} className="btn btn-success"><i className="fas fa-lock"></i> Lock photos</button>
+)}
+
+{hideFollowers ? 
+(
+  <button onClick={unlockFollowers} className="btn btn-success"><i className="fas fa-lock-open"></i> Unlock followers</button>
+)
+
+: 
+
+(
+<button onClick={lockFollowers} className="btn btn-success"><i className="fas fa-lock"></i> Lock followers</button>
+)}
+
+{hideFollowing ? 
+(
+  <button onClick={unlockFollowing} className="btn btn-success"><i className="fas fa-lock-open"></i> Unlock following</button>
+)
+: 
+(
+<button onClick={lockFollowing} className="btn btn-success"><i className="fas fa-lock"></i> Lock following</button>
+)}
+
+
+
 
     <div className="row py-2">
       <div className="col-md-6"> <label htmlFor="firstname">Email</label> <input type="text" value={user.email} className="bg-light form-control" /></div>
@@ -165,6 +245,44 @@ const Settings = ({ match }) => {
     @import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        .social-icons {
+          display: flex;
+          justify-content: center;
+          list-style: none;
+          text-align: center;
+          padding: 0px;
+          margin-top: 10px;
+        }
+
+        .social-icons li {
+          cursor: pointer;
+          width: 25px;
+          height: 25px;
+          border: 1px solid #eee;
+          padding: 20px;
+          margin-right: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: #fff;
+          border-radius: 5px;
+          transition: all 1s;
+        }
+
+        .social-icons li:hover {
+          background: #fff;
+          color: black;
+        }
+
+        .social-icons a {
+          color: white;
+          text-decoration: none;
+        }
+
+        .social-icons a:hover {
+          color: black;
+        }
 
 body {
     font-family: 'Poppins', sans-serif;

@@ -41,7 +41,7 @@ const Followers = ({ match }) => {
       .then(function (doc) {
         if (accessedUserId !== userId) {
           if (doc.data().hideFollowers === true) {
-            toast.error("No permission", {
+            toast.error("Followers are locked", {
               position: toast.POSITION.TOP_CENTER,
             });
             history.push("/people/" + match.params.userId);

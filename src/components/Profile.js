@@ -205,6 +205,25 @@ const Profile = ({ match }) => {
     }
   }
 
+  const onDeleteProfileImage = (imageUrl) => {
+    firebase
+        .firestore()
+        .collection("users")
+        .doc(userId)
+        .get()
+        .then(function (doc) {
+          let userPhotos = doc.data().photos;
+          let updatedUserPhotos = userPhotos.filter(x => x !== imageUrl);
+          firebase.firestore().collection("users").doc(userId).update({
+            photos: updatedUserPhotos,
+          });
+          setImages(updatedUserPhotos);
+          toast.success("Successfully deleted image",{position: toast.POSITION.TOP_CENTER});
+        });
+  };
+
+
+
   return (
     <>
       <main>
@@ -352,7 +371,7 @@ const Profile = ({ match }) => {
   
   (
     <div className="gallery-image" id="gallery">
-{images.map((x => <ImageCard key={x} imageUrl={x} /> ))}
+{images.map((x => <ImageCard key={x} imageUrl={x} checkMyProfile={checkMyProfile} onDelete={onDeleteProfileImage} /> ))}
 </div>
   ) :
   
@@ -620,7 +639,7 @@ const Profile = ({ match }) => {
         .caption {
           position: absolute;
           bottom: 5px;
-          left: 20px;
+          right: 155px;
           opacity: 0.0;
           transition: transform 0.3s ease, opacity 0.3s ease;
         }

@@ -20,32 +20,33 @@ const Login = () => {
     const email = emailRef.current.value;
     e.preventDefault();
 
-    try {
-      setError("");
-      setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      toast.success("Welcome to snapfy", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-
-      firebase
-        .firestore()
-        .collection("users")
-        .get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            if(doc.data().email === email){
-               localStorage.setItem("userId", doc.id);
-               history.push("/people");
-            }
-          });
+      try {
+        setError("");
+        setLoading(true);
+        await login(emailRef.current.value, passwordRef.current.value);
+        toast.success("Welcome to snapfy", {
+          position: toast.POSITION.TOP_CENTER,
         });
-    } catch {
-      toast.error("No such user", {
-        position: toast.POSITION.TOP_CENTER,
-        draggable: true,
-      });
-    }
+
+        firebase
+          .firestore()
+          .collection("users")
+          .get()
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              if (doc.data().email === email) {
+                localStorage.setItem("userId", doc.id);
+                history.push("/people");
+              }
+            });
+          });
+      } catch {
+        toast.error("No such user", {
+          position: toast.POSITION.TOP_CENTER,
+          draggable: true,
+        });
+      }
+
     setLoading(false);
   }
 

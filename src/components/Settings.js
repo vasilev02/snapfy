@@ -270,6 +270,12 @@ const Settings = ({ match }) => {
           transition: all 1s;
         }
 
+        .btn-success{
+          margin-top: 5px;
+          margin-right: 5px;
+          margin-bottom: 5px;
+        }
+
         .social-icons li:hover {
           background: #fff;
           color: black;

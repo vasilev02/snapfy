@@ -87,7 +87,19 @@ const People = () => {
                 data-wow-delay="0.2s"
                 styles="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;"
               >
-                <h3>Follow someone new</h3>
+
+                {searchItem ? 
+                
+                (
+<h3>Find your friend by username</h3>
+                ) :
+
+                (
+                  <h3>Get in touch with someone new</h3>
+                )
+              
+              }
+                
                 <div className="line"></div>
               </div>
             </div>
@@ -142,11 +154,6 @@ const People = () => {
             )
           
           }
-
-
-
-
-            
           </div>
         </div>
       </main>
@@ -154,7 +161,7 @@ const People = () => {
       <style jsx>{`
         @import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
 
-        .profile-link {
+        a {
           text-decoration: none;
         }
 

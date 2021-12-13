@@ -28,6 +28,8 @@ const Profile = ({ match }) => {
   const [hideFollowers, setHideFollowers] = useState(false);
   const [hideFollowing, setHideFollowing] = useState(false);
 
+  const [followersCount, setFollowersCount] = useState(0);
+
 
   const { logout } = useAuth();
   const history = useHistory();
@@ -48,7 +50,11 @@ const Profile = ({ match }) => {
         .then(function (doc) {
           let userPhotos = doc.data().photos;
           //url or public_id
-          userPhotos.push(response.data.url);
+          userPhotos.push(
+            {imageUrl: response.data.url,
+              counter: 0,
+              ids:[]
+            });
           firebase.firestore().collection("users").doc(userId).update({
             photos: userPhotos,
           });
@@ -101,6 +107,7 @@ const Profile = ({ match }) => {
           });
           toast.success("Successfully followed " + doc.data().username,{position: toast.POSITION.TOP_CENTER});
           setFollowed(true);
+          setFollowersCount(doc.data().followersCount + 1);
       });
 
         }
@@ -150,6 +157,7 @@ const Profile = ({ match }) => {
           });
           toast.success("Successfully unfollowed " + doc.data().username,{position: toast.POSITION.TOP_CENTER});
           setFollowed(false);
+          setFollowersCount(doc.data().followersCount - 1);
       });
     }
         
@@ -174,6 +182,7 @@ const Profile = ({ match }) => {
           setHideFollowing(doc.data().hideFollowing);
           setFollowers(doc.data().peopleWhoFollowedMe);
           setFollowing(doc.data().peopleWhoFollow);
+          setFollowersCount(doc.data().followersCount);
           
           let followedMePeople = doc.data().peopleWhoFollowedMe;
           followedMePeople.map(x => {
@@ -181,8 +190,6 @@ const Profile = ({ match }) => {
               setFollowed(true);
             }
           })
-
-
         })
         .catch(function (error) {
           console.log("Error getting document:", error);
@@ -213,7 +220,7 @@ const Profile = ({ match }) => {
         .get()
         .then(function (doc) {
           let userPhotos = doc.data().photos;
-          let updatedUserPhotos = userPhotos.filter(x => x !== imageUrl);
+          let updatedUserPhotos = userPhotos.filter(x => x.imageUrl !== imageUrl);
           firebase.firestore().collection("users").doc(userId).update({
             photos: updatedUserPhotos,
           });
@@ -221,8 +228,6 @@ const Profile = ({ match }) => {
           toast.success("Successfully deleted image",{position: toast.POSITION.TOP_CENTER});
         });
   };
-
-
 
   return (
     <>
@@ -324,7 +329,7 @@ const Profile = ({ match }) => {
 (
 <Link to={"/followers/" + accessedUserId}>
 <li>
-{followers.length}&#160; <i className="fas fa-user-check"></i>
+{followersCount}&#160; <i className="fas fa-user-check"></i>
                     </li>
   </Link>
 )}
@@ -338,7 +343,7 @@ const Profile = ({ match }) => {
 (
 <Link to={"/following/" + accessedUserId}>
 <li>
-{following.length}&#160; <i class="fas fa-user-plus"></i>
+{following.length}&#160; <i className="fas fa-user-plus"></i>
                     </li>
   </Link>
 )}
@@ -356,10 +361,10 @@ const Profile = ({ match }) => {
 
 {hidePhotos && checkUser ? 
 (
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">No photos</h1>
-    <p class="lead">{user.username}'s gallery is private !</p>
+<div className="jumbotron jumbotron-fluid">
+  <div className="container">
+    <h1 className="display-4">No photos</h1>
+    <p className="lead">{user.username}'s gallery is private !</p>
   </div>
 </div>
 ) :
@@ -371,15 +376,15 @@ const Profile = ({ match }) => {
   
   (
     <div className="gallery-image" id="gallery">
-{images.map((x => <ImageCard key={x} imageUrl={x} checkMyProfile={checkMyProfile} onDelete={onDeleteProfileImage} /> ))}
+{images.map((x => <ImageCard key={x.imageUrl} userId={userId} accessedUserId={accessedUserId} imageUrl={x.imageUrl} counter={x.counter} checkMyProfile={checkMyProfile} onDelete={onDeleteProfileImage} /> ))}
 </div>
   ) :
   
   (
-    <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">No photos</h1>
-    <p class="lead">{user.username}'s gallery is empty !</p>
+    <div className="jumbotron jumbotron-fluid">
+  <div className="container">
+    <h1 className="display-4">No photos</h1>
+    <p className="lead">{user.username}'s gallery is empty !</p>
   </div>
 </div>
   )}

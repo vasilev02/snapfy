@@ -5,11 +5,12 @@ import UserCard from "./UserCard";
 
 const People = () => {
   const [users, setUsers] = useState([]);
+  const [randomUsers, setRandomUsers] = useState([]);
   const [searchItem, setSearchItem] = useState("");
   const ref = firebase.firestore().collection("users");
   const userId = localStorage.getItem("userId");
 
-  function getUsers() {
+  function getAllUsers() {
     ref.onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
@@ -19,8 +20,33 @@ const People = () => {
     });
   }
 
+  function getRandomUsers() {
+    ref.onSnapshot( (querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+
+        if(items.length === 3){
+          return;
+        }
+
+        let userFollowers = doc.data().peopleWhoFollowedMe;
+        let userFollowing = doc.data().peopleWhoFollow;
+  
+        let firstCheck = userFollowers.find(x => x === userId);
+        let secondCheck = userFollowing.find(x => x === userId);
+        let thirdCheck = doc.data().id === userId;
+
+        if(!firstCheck && !secondCheck && ! thirdCheck){
+          items.push(doc.data());
+        }
+      });
+      setRandomUsers(items);
+    });
+  }
+
   useEffect(() => {
-    getUsers();
+    getAllUsers();
+    getRandomUsers();
   }, []);
 
   return (
@@ -67,21 +93,60 @@ const People = () => {
             </div>
           </div>
           <div className="row">
-            {users
-              .filter((val) => {
-                if (searchItem === "") {
-                  return {
-                    val,
-                  };
-                } else if (
-                  val.username.toLowerCase().includes(searchItem.toLowerCase())
-                ) {
-                  return val;
-                }
-              })
-              .map((x) => (
-                <UserCard key={x.id} user={x} />
-              ))}
+
+            {searchItem ? 
+            
+            (
+
+              <>
+              {users
+                .filter((val) => {
+                  if (searchItem === "") {
+                    return {
+                      val
+                    };
+                  } else if (
+                    val.username.toLowerCase().includes(searchItem.toLowerCase())
+                  ) {
+                    return val;
+                  }
+                })
+                .map((x) => (
+                  <UserCard key={x.id} user={x} />
+                ))}
+                </>
+             
+
+            ) :
+
+            (
+
+              <>
+              {randomUsers
+                .filter((val) => {
+                  if (searchItem === "") {
+                    return {
+                      val
+                    };
+                  } else if (
+                    val.username.toLowerCase().includes(searchItem.toLowerCase())
+                  ) {
+                    return val;
+                  }
+                })
+                .map((x) => (
+                  <UserCard key={x.id} user={x} />
+                ))}
+                </>
+
+            )
+          
+          }
+
+
+
+
+            
           </div>
         </div>
       </main>

@@ -634,6 +634,7 @@ const Profile = ({ match }) => {
           color: white;
           position: relative;
           background-color: white;
+          cursor: none;
         }
         
         .caption {
@@ -642,6 +643,7 @@ const Profile = ({ match }) => {
           right: 155px;
           opacity: 0.0;
           transition: transform 0.3s ease, opacity 0.3s ease;
+          cursor: none;
         }
         
         .transparent-box {
@@ -668,7 +670,7 @@ const Profile = ({ match }) => {
         }
         
         .img-box:hover {
-          cursor: pointer;
+          cursor: default;
         }
         
         .caption > p:nth-child(2) {

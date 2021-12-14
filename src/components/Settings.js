@@ -127,6 +127,27 @@ const Settings = ({ match }) => {
         setActive(false);
       };
 
+      const changePictureOne = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          backgroundPicture: "https://res.cloudinary.com/defiefioi/image/upload/v1639468119/snapfy/pexels-pixabay-461940_j7roiw.jpg"
+        });
+        history.push("/people/"+ userId);
+      };
+
+      const changePictureTwo = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          backgroundPicture: "https://res.cloudinary.com/defiefioi/image/upload/v1639468119/snapfy/pexels-francesco-ungaro-2835436_v1xie0.jpg"
+        });
+        history.push("/people/"+ userId);
+      };
+
+      const changePictureThree = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          backgroundPicture: "https://res.cloudinary.com/defiefioi/image/upload/v1639468118/snapfy/pexels-jot-2179483_q9e3cq.jpg"
+        });
+        history.push("/people/"+ userId);
+      };
+
     useEffect(() => {
           firebase
             .firestore()
@@ -166,7 +187,6 @@ const Settings = ({ match }) => {
       <div className="pl-sm-4 pl-2" id="img-section"> <b>Profile photo</b>
           <p>Accepted file type .png, .jpg and .jpeg.</p> 
           
-              
           <input
                             type="file"
                             accept="image/png, image/jpeg, image/jpg"
@@ -198,6 +218,13 @@ const Settings = ({ match }) => {
 
 
     </div>
+</div>
+
+<div className="default-background-images">
+<div className="d-flex align-items-start py-3 border-bottom"> <img onClick={changePictureOne} src="https://res.cloudinary.com/defiefioi/image/upload/v1639468119/snapfy/pexels-pixabay-461940_j7roiw.jpg" className="img" alt="Background picture" /></div>
+<div className="d-flex align-items-start py-3 border-bottom"> <img onClick={changePictureTwo} src="https://res.cloudinary.com/defiefioi/image/upload/v1639468119/snapfy/pexels-francesco-ungaro-2835436_v1xie0.jpg" className="img" alt="Background picture" /></div>
+<div className="d-flex align-items-start py-3 border-bottom"> <img onClick={changePictureThree} src="https://res.cloudinary.com/defiefioi/image/upload/v1639468118/snapfy/pexels-jot-2179483_q9e3cq.jpg" className="img" alt="Background picture" /></div>
+
 </div>
 
 {hidePhotos ? 
@@ -285,6 +312,14 @@ const Settings = ({ match }) => {
           text-align: center;
           padding: 0px;
           margin-top: 10px;
+        }
+
+        .default-background-images{
+          display: flex
+        }
+
+        .default-background-images img{
+          cursor: pointer;
         }
 
         .social-icons li {

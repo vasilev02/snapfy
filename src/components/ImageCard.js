@@ -99,24 +99,18 @@ const ImageCard = ({
               type="button"
               className="btn btn-danger"
             >
-              <i className="fas fa-trash-alt"></i>
+              {imageCounter} - <i className="fas fa-trash-alt"></i>
             </button>
 
           ) : (
             <>
-
             {isLoved ? 
-            
             (
-
               <button onClick={unlovePhoto}type="button" className="btn btn-danger">
                 {imageCounter} <i className="fas fa-heart"></i>
               </button>
-
             ) : 
-
             (
-
               <button
                 onClick={lovePhoto}
                 type="button"
@@ -124,11 +118,8 @@ const ImageCard = ({
               >
                 {imageCounter} <i className="far fa-heart"></i>
               </button>
-
             )
-          
           }
-            
             </>
           )}
         </div>

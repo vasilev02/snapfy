@@ -175,6 +175,14 @@ const Profile = ({ match }) => {
         .doc(accessedUserId)
         .get()
         .then(function (doc) {
+
+          if (userId !== accessedUserId) {
+            if(doc.data().isActive === false){
+              history.push("/people");
+              return;
+            } 
+          }
+
           setUser(doc.data());
           setImages(doc.data().photos);
           setHidePhotos(doc.data().hidePhotos);

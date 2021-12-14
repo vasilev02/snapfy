@@ -16,19 +16,40 @@ const UserCard = ({
                 <Link to={`/people/${user.id}`}>
  
                   <div className="advisor_thumb">
-                    <img
+
+                    {user.isActive ? 
+                    (
+                      <img
                       src={user.profilePicture}
                       alt="User picture"
                     />
+                    ) : 
+                    
+                    (
+                      <img
+                      src="https://res.cloudinary.com/defiefioi/image/upload/v1638190690/snapfy/default-user-image_f73kml.png"
+                      alt="User picture"
+                    />
+                    )}
+
                   </div>
 
                   <div className="single_advisor_details_info">
+
+                    {user.isActive ? 
+                    
+                    (
                     <h6>{user.username}</h6>
-                    <p className="designation">{user.fullName}</p>
+                    ) : 
+                    
+                    (
+                      <h6>snapfy user</h6>
+                    )}
+                    
 
 
 
-                    {user.hideFollowers ? 
+                    {user.hideFollowers || user.isActive === false ? 
                     
                     (
                       <p className="designation"><i class="fas fa-lock"></i> followers</p>
@@ -38,7 +59,7 @@ const UserCard = ({
                       <p className="designation">{user.followersCount} followers</p>
                     )}
 
-                    {user.hideFollowing ? 
+                    {user.hideFollowing || user.isActive === false ? 
                     
                     (
                       <p className="designation"><i class="fas fa-lock"></i> following</p>

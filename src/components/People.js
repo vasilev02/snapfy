@@ -14,7 +14,9 @@ const People = () => {
     ref.onSnapshot((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        if(doc.data().isActive === true){
+          items.push(doc.data());
+        }
       });
       setUsers(items);
     });

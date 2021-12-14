@@ -64,6 +64,7 @@ const Register = () => {
         hidePhotos: false,
         hideFollowers: false,
         hideFollowing: false,
+        isActive: true
       }).then(function(docRef) {
 
         localStorage.setItem("userId", docRef.id);

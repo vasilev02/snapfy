@@ -19,6 +19,7 @@ const Settings = ({ match }) => {
     const [hidePhotos, setHidePhotos] = useState(false);
     const [hideFollowers, setHideFollowers] = useState(false);
     const [hideFollowing, setHideFollowing] = useState(false);
+    const [active, setActive] = useState(false);
     
     
 
@@ -112,6 +113,20 @@ const Settings = ({ match }) => {
         setHideFollowing(false);
       };
 
+      const activateAccount = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          isActive: true
+        });
+        setActive(true);
+      };
+
+      const deactivateAccount = () => {
+        firebase.firestore().collection("users").doc(userId).update({
+          isActive: false
+        });
+        setActive(false);
+      };
+
     useEffect(() => {
           firebase
             .firestore()
@@ -123,18 +138,15 @@ const Settings = ({ match }) => {
               setHidePhotos(doc.data().hidePhotos);
               setHideFollowers(doc.data().hideFollowers);
               setHideFollowing(doc.data().hideFollowing);
+              setActive(doc.data().isActive);
             })
             .catch(function (error) {
               console.log("Error getting document:", error);
             });
         
       }, []);
-
-
     return(
-    
         <>
-
 <main>
 
 
@@ -227,13 +239,33 @@ const Settings = ({ match }) => {
       <div className="col-md-6"> <label htmlFor="firstname">Username</label> <input type="text" value={user.username} className="bg-light form-control" /> </div>
     </div>
 
+{active ? 
 
-    <div className="d-sm-flex align-items-center pt-3" id="deactivate">
+(
+
+  <>
+  <div className="d-sm-flex align-items-center pt-3" id="deactivate">
         <div> <b>Deactivate your account</b>
-            <p>Details about your account and password</p>
+            <p>Details about your account</p>
         </div>
     </div>
-    <div className="ml-auto"> <button className="btn danger">Deactivate</button> </div>
+    <div className="ml-auto"> <button onClick={deactivateAccount} className="btn danger">Deactivate</button> </div>
+  </>
+
+) :
+
+(
+
+  <>
+  <div className="d-sm-flex align-items-center pt-3" id="deactivate">
+        <div> <b>Activate your account</b>
+            <p>Details about your account</p>
+        </div>
+    </div>
+    <div className="ml-auto"> <button onClick={activateAccount} className="btn btn-success">Activate</button> </div>
+  </>
+)}
+
 </div>
 </div>
 

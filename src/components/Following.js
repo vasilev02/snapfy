@@ -132,6 +132,10 @@ const Following = ({ match }) => {
       <style jsx>{`
         @import url("https://use.fontawesome.com/releases/v5.15.4/css/all.css");
 
+        a {
+          text-decoration: none;
+        }
+
         .profile-link {
           text-decoration: none;
         }

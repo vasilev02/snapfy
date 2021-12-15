@@ -35,7 +35,7 @@ The application has client-side form validation which helps ensure data.
 
 ## Bonuses
 
-[Toastr] - a JavaScript library which is used to create a notification popup.
+[react-toastify] - a JavaScript library which is used to create a notification popup.
 
 [Cloudinary] - for storing web application's images.
 
@@ -53,7 +53,7 @@ The application has client-side form validation which helps ensure data.
 
 [<img align="left" alt="linkedin" width="30px" src="https://cdn.icon-icons.com/icons2/2429/PNG/512/linkedin_logo_icon_147268.png" />][linkedin]
 
-[toastr]: https://www.npmjs.com/package/ngx-toastr
+[react-toastify]: https://www.npmjs.com/package/react-toastify
 [cloudinary]: https://cloudinary.com
 [linkedin]: https://www.linkedin.com/in/valentin-vasilev-849a8b1a6/
 [react]: https://reactjs.org/
